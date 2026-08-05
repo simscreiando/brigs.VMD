@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brigadeiraria — Gestão Interna</title>
+<meta name="description" content="Painel interno da brigadeiraria: insumos, fichas técnicas, precificação, orçamentos e estoque.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{
+  --cacau:#3B2418; --cacau-2:#5A3A26; --creme:#FBF3E7; --creme-2:#F3E4CF;
+  --doce:#C8506B; --doce-soft:#F6DCE3; --verde:#3F7D5C; --amarelo:#E0A63C;
+  --linha:#E4D2BA; --texto:#3B2418; --muted:#8A705C; --branco:#fff;
+  --radius:14px; --sombra:0 2px 10px rgba(59,36,24,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--texto);font-family:Karla,system-ui,sans-serif;font-size:15px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0}
+a{color:var(--doce)}
+header{background:var(--cacau);color:var(--creme);padding:14px 18px;position:sticky;top:0;z-index:20}
+.hrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:1200px;margin:0 auto}
+header h1{font-size:20px;letter-spacing:.3px}
+header .tag{font-size:12px;color:#D9BFA6}
+nav{background:var(--cacau-2);position:sticky;top:52px;z-index:19;overflow-x:auto}
+nav .inner{display:flex;gap:2px;max-width:1200px;margin:0 auto;padding:0 10px}
+nav button{background:none;border:0;color:#EBD9C4;padding:12px 14px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
+nav button.on{color:#fff;border-bottom-color:var(--doce)}
+main{max-width:1200px;margin:0 auto;padding:18px 14px 80px}
+.card{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius);padding:16px;box-shadow:var(--sombra);margin-bottom:16px}
+.card h2{font-size:19px;margin-bottom:4px}
+.sub{color:var(--muted);font-size:13px;margin:2px 0 12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+input,select,textarea{font:inherit;padding:9px 11px;border:1px solid var(--linha);border-radius:10px;background:#fff;color:var(--texto);min-width:0}
+input:focus,select:focus{outline:2px solid var(--doce-soft);border-color:var(--doce)}
+.grow{flex:1;min-width:180px}
+button.btn{font:inherit;font-weight:700;border:0;border-radius:10px;padding:9px 14px;cursor:pointer;background:var(--cacau);color:#fff}
+button.btn.sec{background:var(--doce-soft);color:var(--cacau)}
+button.btn.ghost{background:transparent;color:var(--cacau);border:1px solid var(--linha)}
+button.btn.dang{background:#fff;color:#B23A48;border:1px solid #EBC3C9}
+button.btn:hover{filter:brightness(1.08)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:8px 6px;border-bottom:2px solid var(--linha);cursor:pointer;white-space:nowrap}
+td{padding:8px 6px;border-bottom:1px solid #F0E6D8;vertical-align:middle}
+tr:hover td{background:#FDF8F0}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.wrap{overflow-x:auto}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.kpi{background:var(--creme-2);border-radius:12px;padding:12px 14px}
+.kpi .lab{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.kpi .val{font-family:Fraunces;font-size:24px;font-weight:700;margin-top:2px}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--doce-soft);color:var(--doce)}
+.pill.v{background:#DFF0E6;color:var(--verde)}
+.pill.a{background:#FBEBD0;color:#9A6B14}
+label.f{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.field{margin-bottom:10px}
+.field input,.field select{width:100%}
+dialog{border:0;border-radius:16px;padding:0;max-width:640px;width:94%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(59,36,24,.45)}
+.dlg{padding:18px}
+.dlg h3{font-size:18px;margin-bottom:10px}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.row select{flex:2}.row input{flex:1}
+.muted{color:var(--muted)}
+.right{text-align:right}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--cacau);color:#fff;padding:11px 18px;border-radius:999px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+#toast.on{opacity:1}
+.locgroup{border:1px solid var(--linha);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.locgroup summary{cursor:pointer;padding:10px 14px;background:var(--creme-2);font-weight:700}
+.locgroup ul{margin:0;padding:10px 14px 12px 30px}
+.locgroup li{padding:3px 0}
+@media print{header,nav,.noprint{display:none!important}main{padding:0}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+<header><div class="hrow">
+  <h1>🍫 Brigadeiraria</h1>
+  <span class="tag" id="hdrInfo">carregando…</span>
+  <span style="flex:1"></span>
+  <button class="btn sec noprint" onclick="exportJSON()">Exportar JSON</button>
+  <button class="btn sec noprint" onclick="exportXLSX()">Exportar Excel</button>
+</div></header>
+<nav><div class="inner" id="tabs"></div></nav>
+<main id="view"></main>
+<div id="toast"></div>
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+
+<script>
+/* ---------- utilidades ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const KEY='brigadeiraria.dados.v1';
+const CFGKEY='brigadeiraria.github.v1';
+const BRL=n=>(Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const BRL4=n=>'R$ '+(Number(n)||0).toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4});
+const PCT=n=>((Number(n)||0)*100).toFixed(1).replace('.',',')+'%';
+const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200);}
+function openDlg(html){$('#dlgBody').innerHTML=html;$('#dlg').showModal();}
+function closeDlg(){$('#dlg').close();}
+
+let DB=null, GH=JSON.parse(localStorage.getItem(CFGKEY)||'null')||{owner:'',repo:'',branch:'main',path:'dados.json',token:'',auto:false};
+let SHA=null;
+
+/* ---------- carga e persistência ---------- */
+async function boot(){
+  const local=localStorage.getItem(KEY);
+  if(GH.token&&GH.owner&&GH.repo){
+    try{ const remoto=await ghLoad(); if(remoto){DB=remoto; save(false); okBoot('sincronizado com o GitHub'); return;} }catch(e){ console.warn(e); }
+  }
+  if(local){ DB=JSON.parse(local); okBoot('dados locais'); return; }
+  try{
+    const r=await fetch('dados.json',{cache:'no-store'});
+    DB=await r.json(); save(false); okBoot('dados.json do repositório');
+  }catch(e){
+    DB={config:{taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0},insumos:[],receitas:[],produtos:[],despesas:[],estoque:[]};
+    okBoot('vazio — importe o dados.json em Configurações');
+  }
+}
+function okBoot(origem){
+  DB.config=Object.assign({taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0},DB.config||{});
+  ['insumos','receitas','produtos','despesas','estoque'].forEach(k=>DB[k]=DB[k]||[]);
+  $('#hdrInfo').textContent=origem;
+  renderTabs(); go(location.hash.slice(1)||'insumos');
+}
+function save(sync=true){
+  localStorage.setItem(KEY,JSON.stringify(DB));
+  if(sync&&GH.auto&&GH.token&&GH.owner&&GH.repo) ghSave().catch(e=>toast('Falha ao sincronizar: '+e.message));
+}
+
+/* ---------- GitHub ---------- */
+function ghUrl(){return `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`;}
+async function ghLoad(){
+  const r=await fetch(ghUrl()+'?ref='+encodeURIComponent(GH.branch),{headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json'}});
+  if(!r.ok) throw new Error(r.status+' '+await r.text());
+  const j=await r.json(); SHA=j.sha;
+  return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));
+}
+async function ghSave(){
+  if(!SHA){ try{await ghLoad();}catch(e){} }
+  const body={message:'atualiza dados via app '+new Date().toISOString(),branch:GH.branch,
+    content:btoa(unescape(encodeURIComponent(JSON.stringify(DB,null,1))))};
+  if(SHA) body.sha=SHA;
+  const r=await fetch(ghUrl(),{method:'PUT',headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(r.status+' '+await r.text());
+  SHA=(await r.json()).content.sha;
+  toast('Salvo no GitHub');
+}
+
+/* ---------- cálculos ---------- */
+const insumoPorNome=n=>DB.insumos.find(i=>i.nome.toLowerCase().trim()===String(n||'').toLowerCase().trim());
+function custoInsumo(i){
+  if(i.quantidade&&i.valor!=null) return (i.valor/i.quantidade)*(1+(i.perda||0));
+  return i.custoUnit||0;
+}
+function custoItemReceita(it){
+  const ins=insumoPorNome(it.item);
+  if(ins) return custoInsumo(ins)*(it.quantidade||0);
+  return it.custo||0;
+}
+function custoReceita(r){return (r.itens||[]).reduce((s,it)=>s+custoItemReceita(it),0);}
+function pesoReceita(r){return (r.itens||[]).reduce((s,it)=>s+(Number(it.quantidade)||0),0);}
+function pesoFinal(r){const p=pesoReceita(r);const a=Number(r.pesoApos)||0;return (a>0&&a<=p)?a:p*(1-(r.perdaCoccao||0));}
+function precoKg(r){const pf=pesoFinal(r);return pf?custoReceita(r)/pf*1000:0;}
+function precificar(p){
+  const c=DB.config, base=Number(p.custoUnit)||0;
+  const total=base*(1+(c.custosIndiretos||0));
+  const mk=Number(p.markup)||c.markupPadrao||2.85;
+  const avulso=total*mk;
+  return {total, avulso, festas:avulso*0.85, revenda:avulso*0.635,
+          delivery:avulso/(1-(c.taxaDelivery||0))*1.0,
+          lucro:avulso-total-(avulso*(c.taxaCartao||0))};
+}
+const despesaTotal=()=>DB.despesas.reduce((s,d)=>s+(Number(d.valor)||0),0);
+
+/* ---------- navegação ---------- */
+const TABS=[['insumos','Insumos'],['receitas','Receitas'],['precificacao','Precificação'],['orcamento','Orçamento'],['estoque','Estoque'],['config','Configurações']];
+let atual='insumos';
+function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-k="${k}" onclick="go('${k}')">${l}</button>`).join('');}
+function go(k){
+  if(!TABS.some(t=>t[0]===k))k='insumos';
+  atual=k;location.hash=k;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+  window.scrollTo(0,0);
+  ({insumos:viewInsumos,receitas:viewReceitas,precificacao:viewPrecificacao,orcamento:viewOrcamento,estoque:viewEstoque,config:viewConfig}[k])();
+}
+
+/* ---------- INSUMOS ---------- */
+let fIns='',ordIns='nome',ascIns=true;
+function viewInsumos(){
+  const lista=DB.insumos.filter(i=>i.nome.toLowerCase().includes(fIns.toLowerCase()))
+    .sort((a,b)=>{const A=ordIns==='nome'?a.nome.toLowerCase():custoInsumo(a),B=ordIns==='nome'?b.nome.toLowerCase():custoInsumo(b);return (A>B?1:A<B?-1:0)*(ascIns?1:-1);});
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>Insumos</h2><p class="sub">Custo por grama/unidade recalculado a partir do valor pago, da quantidade da embalagem e do fator de perda.</p>
+    <div class="toolbar">
+      <input class="grow" placeholder="Buscar matéria-prima…" value="${esc(fIns)}" oninput="fIns=this.value;viewInsumos();this.focus();this.setSelectionRange(this.value.length,this.value.length)">
+      <button class="btn" onclick="editInsumo(-1)">+ Novo insumo</button>
+    </div>
+    <div class="grid g3" style="margin-bottom:14px">
+      <div class="kpi"><div class="lab">Cadastrados</div><div class="val">${DB.insumos.length}</div></div>
+      <div class="kpi"><div class="lab">Exibindo</div><div class="val">${lista.length}</div></div>
+      <div class="kpi"><div class="lab">Custo médio /g</div><div class="val">${BRL4(DB.insumos.reduce((s,i)=>s+custoInsumo(i),0)/(DB.insumos.length||1))}</div></div>
+    </div>
+    <div class="wrap"><table>
+      <thead><tr>
+        <th onclick="ordIns='nome';ascIns=!ascIns;viewInsumos()">Matéria-prima</th>
+        <th>Unidade</th><th class="num">Qtd. embalagem</th><th class="num">Valor pago</th><th class="num">Perda</th>
+        <th class="num" onclick="ordIns='custo';ascIns=!ascIns;viewInsumos()">Custo unitário</th><th></th>
+      </tr></thead><tbody>
+      ${lista.map(i=>{const idx=DB.insumos.indexOf(i);return `<tr>
+        <td><strong>${esc(i.nome)}</strong></td><td>${esc(i.unidade||'')}</td>
+        <td class="num">${i.quantidade??'—'}</td><td class="num">${BRL(i.valor)}</td>
+        <td class="num">${i.perda?PCT(i.perda):'—'}</td>
+        <td class="num"><strong>${BRL4(custoInsumo(i))}</strong></td>
+        <td class="num"><button class="btn ghost" onclick="editInsumo(${idx})">Editar</button></td></tr>`}).join('')}
+      </tbody></table></div>
+  </div>`;
+}
+function editInsumo(idx){
+  const i=idx<0?{nome:'',unidade:'Gramas',quantidade:1000,valor:0,perda:0}:DB.insumos[idx];
+  openDlg(`<h3>${idx<0?'Novo insumo':'Editar insumo'}</h3>
+   <div class="field"><label class="f">Matéria-prima</label><input id="i_nome" value="${esc(i.nome)}"></div>
+   <div class="grid g2">
+    <div class="field"><label class="f">Unidade</label><select id="i_un">${['Gramas','ml','Unidade'].map(u=>`<option ${i.unidade===u?'selected':''}>${u}</option>`).join('')}</select></div>
+    <div class="field"><label class="f">Qtd. da embalagem</label><input id="i_qtd" type="number" step="any" value="${i.quantidade??''}"></div>
+    <div class="field"><label class="f">Valor pago (R$)</label><input id="i_val" type="number" step="any" value="${i.valor??''}"></div>
+    <div class="field"><label class="f">Fator de perda (ex: 0,05)</label><input id="i_per" type="number" step="any" value="${i.perda??0}"></div>
+   </div>
+   <div class="toolbar" style="justify-content:flex-end;margin:12px 0 0">
+     ${idx>=0?`<button class="btn dang" onclick="delInsumo(${idx})">Excluir</button>`:''}
+     <button class="btn ghost" onclick="closeDlg()">Cancelar</button>
+     <button class="btn" onclick="saveInsumo(${idx})">Salvar</button></div>`);
+}
+function saveInsumo(idx){
+  const o={nome:$('#i_nome').value.trim(),unidade:$('#i_un').value,quantidade:+$('#i_qtd').value||null,
+           valor:+$('#i_val').value||0,perda:+$('#i_per').value||0};
+  if(!o.nome) return toast('Informe o nome');
+  o.custoUnit=o.quantidade?o.valor/o.quantidade:0;
+  idx<0?DB.insumos.push(o):DB.insumos[idx]=o;
+  save();closeDlg();viewInsumos();toast('Insumo salvo');
+}
+function delInsumo(idx){DB.insumos.splice(idx,1);save();closeDlg();viewInsumos();toast('Insumo excluído');}
+
+/* ---------- RECEITAS ---------- */
+let fRec='';
+function viewReceitas(){
+  const lista=DB.receitas.filter(r=>r.nome.toLowerCase().includes(fRec.toLowerCase()));
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>Receitas e fichas técnicas</h2><p class="sub">O custo vem direto dos insumos: mudou o preço de uma matéria-prima, todas as receitas se atualizam.</p>
+    <div class="toolbar">
+      <input class="grow" placeholder="Buscar receita…" value="${esc(fRec)}" oninput="fRec=this.value;viewReceitas();this.focus();this.setSelectionRange(this.value.length,this.value.length)">
+      <button class="btn" onclick="editReceita(-1)">+ Nova receita</button>
+      <button class="btn sec" onclick="calcPerda()">Calculadora de perda</button>
+    </div>
+    <div class="wrap"><table>
+      <thead><tr><th>Receita</th><th class="num">Itens</th><th class="num">Peso cru</th><th class="num">% perda</th><th class="num">Peso final</th><th class="num">Custo</th><th class="num">Custo/kg</th><th></th></tr></thead>
+      <tbody>${lista.map(r=>{const idx=DB.receitas.indexOf(r);return `<tr>
+        <td><strong>${esc(r.nome)}</strong></td><td class="num">${(r.itens||[]).length}</td>
+        <td class="num">${pesoReceita(r).toFixed(0)} g</td><td class="num">${PCT(r.perdaCoccao||0)}</td>
+        <td class="num">${pesoFinal(r).toFixed(0)} g</td><td class="num"><strong>${BRL(custoReceita(r))}</strong></td>
+        <td class="num">${BRL(precoKg(r))}</td>
+        <td class="num"><button class="btn ghost" onclick="editReceita(${idx})">Abrir</button></td></tr>`}).join('')}
+      </tbody></table></div>
+  </div>`;
+}
+let rascunho=null, recIdx=-1;
+function editReceita(idx){
+  rascunho=idx<0?{nome:'',perdaCoccao:0.3,itens:[]}:JSON.parse(JSON.stringify(DB.receitas[idx]));
+  drawReceita(idx);
+}
+function drawReceita(idx){
+  recIdx=idx;
+  const r=rascunho, opts=DB.insumos.map(i=>`<option value="${esc(i.nome)}">`).join('');
+  openDlg(`<h3>${idx<0?'Nova receita':'Ficha técnica'}</h3>
+   <div class="grid g2">
+     <div class="field"><label class="f">Nome</label><input id="r_nome" value="${esc(r.nome)}" oninput="rascunho.nome=this.value"></div>
+     <div class="field"><label class="f">% perda de cocção (0,3 = 30%)</label><input id="r_perda" type="number" step="any" value="${r.perdaCoccao??0}" oninput="rascunho.perdaCoccao=+this.value;drawTotais()"></div>
+   </div>
+   <label class="f">Itens</label><datalist id="lst">${opts}</datalist>
+   <div id="itens">${r.itens.map((it,j)=>linhaItem(it,j)).join('')}</div>
+   <button class="btn sec" style="margin-top:6px" onclick="rascunho.itens.push({item:'',unidade:'Gramas',quantidade:0});drawReceita(recIdx)">+ Item</button>
+   <div id="totais" style="margin-top:12px"></div>
+   <div class="toolbar" style="justify-content:flex-end;margin:12px 0 0">
+     ${idx>=0?`<button class="btn dang" onclick="DB.receitas.splice(${idx},1);save();closeDlg();viewReceitas()">Excluir</button>`:''}
+     <button class="btn ghost" onclick="closeDlg()">Cancelar</button>
+     <button class="btn" onclick="saveReceita(${idx})">Salvar</button></div>`);
+  drawTotais();
+}
+function linhaItem(it,j){
+  return `<div class="row">
+    <input list="lst" style="flex:2" value="${esc(it.item)}" placeholder="insumo" oninput="rascunho.itens[${j}].item=this.value;drawTotais()">
+    <input type="number" step="any" style="flex:.7" value="${it.quantidade??''}" placeholder="qtd" oninput="rascunho.itens[${j}].quantidade=+this.value;drawTotais()">
+    <span class="muted" id="c${j}" style="width:80px;text-align:right"></span>
+    <button class="btn ghost" onclick="rascunho.itens.splice(${j},1);drawReceita(recIdx)">✕</button></div>`;
+}
+function drawTotais(){
+  const r=rascunho;if(!r)return;
+  r.itens.forEach((it,j)=>{const el=document.getElementById('c'+j);if(el)el.textContent=BRL(custoItemReceita(it));});
+  const t=document.getElementById('totais');if(!t)return;
+  t.innerHTML=`<div class="grid g3">
+    <div class="kpi"><div class="lab">Custo da receita</div><div class="val">${BRL(custoReceita(r))}</div></div>
+    <div class="kpi"><div class="lab">Peso final</div><div class="val">${pesoFinal(r).toFixed(0)} g</div></div>
+    <div class="kpi"><div class="lab">Custo por kg</div><div class="val">${BRL(precoKg(r))}</div></div></div>`;
+}
+function saveReceita(idx){
+  if(!rascunho.nome.trim())return toast('Dê um nome à receita');
+  rascunho.itens=rascunho.itens.filter(i=>i.item&&i.quantidade);
+  rascunho.pesoApos=null;
+  idx<0?DB.receitas.push(rascunho):DB.receitas[idx]=rascunho;
+  save();closeDlg();viewReceitas();toast('Receita salva');
+}
+function calcPerda(){
+  openDlg(`<h3>Calculadora de perda de massa</h3>
+   <p class="sub">Quanto entrou na panela (cru) e quanto saiu depois de cozido.</p>
+   <div class="grid g2">
+     <div class="field"><label class="f">Entrou (g)</label><input id="p_in" type="number" oninput="pcalc()"></div>
+     <div class="field"><label class="f">Saiu (g)</label><input id="p_out" type="number" oninput="pcalc()"></div></div>
+   <div class="kpi"><div class="lab">Perda por cocção</div><div class="val" id="p_res">—</div></div>
+   <div class="toolbar" style="justify-content:flex-end;margin-top:12px"><button class="btn" onclick="closeDlg()">Fechar</button></div>`);
+}
+function pcalc(){const a=+$('#p_in').value,b=+$('#p_out').value;$('#p_res').textContent=a>0&&b>0?PCT((a-b)/a):'—';}
+
+/* ---------- PRECIFICAÇÃO ---------- */
+let fPro='',fLinha='';
+function viewPrecificacao(){
+  const linhas=[...new Set(DB.produtos.map(p=>p.linha))].sort();
+  const lista=DB.produtos.filter(p=>p.nome.toLowerCase().includes(fPro.toLowerCase())&&(!fLinha||p.linha===fLinha));
+  const c=DB.config, meta=Number(c.metaMensal)||despesaTotal();
+  const margMedia=lista.length?lista.reduce((s,p)=>{const r=precificar(p);return s+(r.avulso?r.lucro/r.avulso:0)},0)/lista.length:0;
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>Precificação e margem</h2><p class="sub">Preço sugerido = custo + custos indiretos (${PCT(c.custosIndiretos)}) × markup. Taxa de cartão ${PCT(c.taxaCartao)} e delivery ${PCT(c.taxaDelivery)} entram no cálculo.</p>
+    <div class="grid g3" style="margin-bottom:14px">
+      <div class="kpi"><div class="lab">Produtos</div><div class="val">${DB.produtos.length}</div></div>
+      <div class="kpi"><div class="lab">Margem média (avulso)</div><div class="val">${PCT(margMedia)}</div></div>
+      <div class="kpi"><div class="lab">Custo fixo do mês</div><div class="val">${BRL(despesaTotal())}</div></div>
+      <div class="kpi"><div class="lab">Meta de faturamento</div><div class="val">${BRL(meta)}</div></div>
+    </div>
+    <div class="toolbar">
+      <input class="grow" placeholder="Buscar produto…" value="${esc(fPro)}" oninput="fPro=this.value;viewPrecificacao();this.focus();this.setSelectionRange(this.value.length,this.value.length)">
+      <select onchange="fLinha=this.value;viewPrecificacao()"><option value="">Todas as linhas</option>${linhas.map(l=>`<option ${fLinha===l?'selected':''}>${esc(l)}</option>`).join('')}</select>
+      <button class="btn" onclick="editProduto(-1)">+ Novo produto</button>
+    </div>
+    <div class="wrap"><table>
+      <thead><tr><th>Produto</th><th>Linha</th><th class="num">Custo</th><th class="num">Custo c/ indiretos</th><th class="num">Markup</th><th class="num">Avulso</th><th class="num">Festas (cento)</th><th class="num">Revenda</th><th class="num">Delivery</th><th class="num">Margem</th><th></th></tr></thead>
+      <tbody>${lista.map(p=>{const idx=DB.produtos.indexOf(p),r=precificar(p);return `<tr>
+        <td><strong>${esc(p.nome)}</strong></td><td><span class="pill">${esc(p.linha)}</span></td>
+        <td class="num">${BRL(p.custoUnit)}</td><td class="num">${BRL(r.total)}</td><td class="num">${(p.markup||c.markupPadrao).toFixed(2)}</td>
+        <td class="num"><strong>${BRL(r.avulso)}</strong></td><td class="num">${BRL(r.festas)}</td><td class="num">${BRL(r.revenda)}</td><td class="num">${BRL(r.delivery)}</td>
+        <td class="num"><span class="pill ${r.avulso&&r.lucro/r.avulso>=.5?'v':'a'}">${r.avulso?PCT(r.lucro/r.avulso):'—'}</span></td>
+        <td class="num"><button class="btn ghost" onclick="editProduto(${idx})">Editar</button></td></tr>`}).join('')}
+      </tbody></table></div>
+  </div>
+  <div class="card"><h2>Despesas fixas do mês</h2>
+    <p class="sub">Base para a meta e para o ponto de equilíbrio.</p>
+    <div class="wrap"><table><thead><tr><th>Descrição</th><th class="num">Valor</th><th></th></tr></thead><tbody>
+      ${DB.despesas.map((d,j)=>`<tr><td><input value="${esc(d.nome)}" style="width:100%" onchange="DB.despesas[${j}].nome=this.value;save()"></td>
+      <td class="num"><input type="number" step="any" value="${d.valor}" style="width:120px;text-align:right" onchange="DB.despesas[${j}].valor=+this.value;save();viewPrecificacao()"></td>
+      <td class="num"><button class="btn ghost" onclick="DB.despesas.splice(${j},1);save();viewPrecificacao()">✕</button></td></tr>`).join('')}
+      <tr><td><strong>Total</strong></td><td class="num"><strong>${BRL(despesaTotal())}</strong></td><td></td></tr>
+    </tbody></table></div>
+    <button class="btn sec" style="margin-top:10px" onclick="DB.despesas.push({nome:'Nova despesa',valor:0});save();viewPrecificacao()">+ Despesa</button>
+  </div>`;
+}
+function editProduto(idx){
+  const p=idx<0?{linha:'Brigadeiros',nome:'',custoUnit:0,markup:DB.config.markupPadrao}:DB.produtos[idx];
+  const recs=DB.receitas.map(r=>`<option value="${esc(r.nome)}">${esc(r.nome)} — ${BRL(precoKg(r))}/kg</option>`).join('');
+  openDlg(`<h3>${idx<0?'Novo produto':'Editar produto'}</h3>
+   <div class="grid g2">
+    <div class="field"><label class="f">Produto</label><input id="p_nome" value="${esc(p.nome)}"></div>
+    <div class="field"><label class="f">Linha</label><input id="p_linha" value="${esc(p.linha)}"></div>
+    <div class="field"><label class="f">Custo unitário (R$)</label><input id="p_custo" type="number" step="any" value="${p.custoUnit||0}"></div>
+    <div class="field"><label class="f">Markup</label><input id="p_mk" type="number" step="any" value="${p.markup||DB.config.markupPadrao}"></div>
+   </div>
+   <div class="field"><label class="f">Calcular custo a partir de uma receita</label>
+     <div class="row"><select id="p_rec" style="flex:2"><option value="">—</option>${recs}</select>
+     <input id="p_g" type="number" placeholder="gramas" style="flex:1">
+     <button class="btn sec" onclick="fromRec()">Aplicar</button></div></div>
+   <div class="toolbar" style="justify-content:flex-end;margin:12px 0 0">
+     ${idx>=0?`<button class="btn dang" onclick="DB.produtos.splice(${idx},1);save();closeDlg();viewPrecificacao()">Excluir</button>`:''}
+     <button class="btn ghost" onclick="closeDlg()">Cancelar</button>
+     <button class="btn" onclick="saveProduto(${idx})">Salvar</button></div>`);
+}
+function fromRec(){
+  const r=DB.receitas.find(x=>x.nome===$('#p_rec').value), g=+$('#p_g').value;
+  if(!r||!g)return toast('Escolha a receita e os gramas');
+  $('#p_custo').value=(precoKg(r)/1000*g).toFixed(4);
+}
+function saveProduto(idx){
+  const o={nome:$('#p_nome').value.trim(),linha:$('#p_linha').value.trim()||'Outros',
+           custoUnit:+$('#p_custo').value||0,markup:+$('#p_mk').value||DB.config.markupPadrao};
+  if(!o.nome)return toast('Informe o nome');
+  idx<0?DB.produtos.push(o):DB.produtos[idx]=Object.assign(DB.produtos[idx],o);
+  save();closeDlg();viewPrecificacao();toast('Produto salvo');
+}
+
+/* ---------- ORÇAMENTO ---------- */
+let orc=JSON.parse(localStorage.getItem('brigadeiraria.orc')||'null')||{cliente:'',data:new Date().toISOString().slice(0,10),modalidade:'avulso',itens:[]};
+const saveOrc=()=>localStorage.setItem('brigadeiraria.orc',JSON.stringify(orc));
+function precoModal(p){const r=precificar(p);return {avulso:r.avulso,festas:r.festas,revenda:r.revenda,delivery:r.delivery}[orc.modalidade];}
+function viewOrcamento(){
+  const linhas=orc.itens.map((it,j)=>{
+    const p=DB.produtos.find(x=>x.nome===it.produto);
+    const pu=p?precoModal(p):0, cu=p?precificar(p).total:0;
+    return {j,it,pu,cu,tot:pu*it.qtd,custo:cu*it.qtd};
+  });
+  const tot=linhas.reduce((s,l)=>s+l.tot,0), custo=linhas.reduce((s,l)=>s+l.custo,0);
+  const lucro=tot-custo;
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>Orçamento</h2><p class="sub">Monte o pedido, veja o lucro e imprima para enviar ao cliente.</p>
+    <div class="grid g3 noprint" style="margin-bottom:12px">
+      <div class="field"><label class="f">Cliente</label><input value="${esc(orc.cliente)}" oninput="orc.cliente=this.value;saveOrc()"></div>
+      <div class="field"><label class="f">Data</label><input type="date" value="${orc.data}" oninput="orc.data=this.value;saveOrc()"></div>
+      <div class="field"><label class="f">Modalidade</label><select onchange="orc.modalidade=this.value;saveOrc();viewOrcamento()">
+        ${[['avulso','Venda avulsa'],['festas','Festas (cento)'],['revenda','Revenda'],['delivery','Delivery']].map(([v,l])=>`<option value="${v}" ${orc.modalidade===v?'selected':''}>${l}</option>`).join('')}</select></div>
+    </div>
+    <div class="toolbar noprint">
+      <select id="o_prod" class="grow">${DB.produtos.map(p=>`<option>${esc(p.nome)}</option>`).join('')}</select>
+      <input id="o_qtd" type="number" value="100" style="width:100px">
+      <button class="btn" onclick="addOrc()">Adicionar</button>
+      <button class="btn ghost" onclick="window.print()">Imprimir / PDF</button>
+      <button class="btn dang" onclick="orc.itens=[];saveOrc();viewOrcamento()">Limpar</button>
+    </div>
+    <div class="wrap"><table><thead><tr><th>Produto</th><th class="num">Qtd</th><th class="num">Preço un.</th><th class="num">Total</th><th class="noprint"></th></tr></thead>
+      <tbody>${linhas.map(l=>`<tr><td>${esc(l.it.produto)}</td>
+        <td class="num"><input type="number" value="${l.it.qtd}" style="width:80px;text-align:right" onchange="orc.itens[${l.j}].qtd=+this.value;saveOrc();viewOrcamento()"></td>
+        <td class="num">${BRL(l.pu)}</td><td class="num"><strong>${BRL(l.tot)}</strong></td>
+        <td class="num noprint"><button class="btn ghost" onclick="orc.itens.splice(${l.j},1);saveOrc();viewOrcamento()">✕</button></td></tr>`).join('')||'<tr><td colspan="5" class="muted">Nenhum item ainda.</td></tr>'}
+      </tbody></table></div>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="kpi"><div class="lab">Total do orçamento</div><div class="val">${BRL(tot)}</div></div>
+      <div class="kpi"><div class="lab">Custo estimado</div><div class="val">${BRL(custo)}</div></div>
+      <div class="kpi"><div class="lab">Lucro</div><div class="val">${BRL(lucro)}</div></div>
+      <div class="kpi"><div class="lab">Margem</div><div class="val">${tot?PCT(lucro/tot):'—'}</div></div>
+    </div>
+  </div>`;
+}
+function addOrc(){const p=$('#o_prod').value,q=+$('#o_qtd').value||1;if(!p)return;orc.itens.push({produto:p,qtd:q});saveOrc();viewOrcamento();}
+
+/* ---------- ESTOQUE ---------- */
+let fEst='';
+const LOCAIS={'A':'Armário A (caixa superior)','B':'Armário B','C':'Armário C','D':'Caixa D','E':'Caixa E','F':'Organizador F (porta-sapato)','P':'Prateleiras'};
+function nomeLocal(l){const b=String(l)[0];return (LOCAIS[b]||'Outros')+' · '+l;}
+function viewEstoque(){
+  const lista=DB.estoque.filter(e=>(e.item+' '+e.local).toLowerCase().includes(fEst.toLowerCase()));
+  const grupos={};lista.forEach(e=>{(grupos[e.local]=grupos[e.local]||[]).push(e)});
+  const acabando=DB.estoque.filter(e=>e.acabando).length;
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>Estoque e catálogo de materiais</h2><p class="sub">Organização por nicho: Armário A (3×3), B (2×3), C (3×5), caixas D e E, organizador F e prateleiras P1–P4.</p>
+    <div class="grid g3" style="margin-bottom:14px">
+      <div class="kpi"><div class="lab">Itens catalogados</div><div class="val">${DB.estoque.length}</div></div>
+      <div class="kpi"><div class="lab">Nichos usados</div><div class="val">${new Set(DB.estoque.map(e=>e.local)).size}</div></div>
+      <div class="kpi"><div class="lab">Marcados como acabando</div><div class="val">${acabando}</div></div>
+    </div>
+    <div class="toolbar">
+      <input class="grow" placeholder="Buscar item ou nicho (ex.: oreo, C.1.2)…" value="${esc(fEst)}" oninput="fEst=this.value;viewEstoque();this.focus();this.setSelectionRange(this.value.length,this.value.length)">
+      <button class="btn" onclick="addEstoque()">+ Item</button>
+    </div>
+    ${Object.keys(grupos).sort().map(l=>`<details class="locgroup" ${fEst?'open':''}>
+      <summary>${esc(nomeLocal(l))} <span class="muted">(${grupos[l].length})</span></summary>
+      <ul>${grupos[l].map(e=>{const j=DB.estoque.indexOf(e);return `<li>
+        <label style="cursor:pointer"><input type="checkbox" ${e.acabando?'checked':''} onchange="DB.estoque[${j}].acabando=this.checked;save();viewEstoque()">
+        ${esc(e.item)}</label> ${e.acabando?'<span class="pill a">acabando</span>':''}
+        <button class="btn ghost" style="padding:2px 8px;font-size:12px" onclick="DB.estoque.splice(${j},1);save();viewEstoque()">✕</button></li>`}).join('')}</ul>
+    </details>`).join('')||'<p class="muted">Nada encontrado.</p>'}
+  </div>`;
+}
+function addEstoque(){
+  openDlg(`<h3>Novo item de estoque</h3>
+   <div class="field"><label class="f">Item</label><input id="e_item"></div>
+   <div class="field"><label class="f">Nicho (ex.: C.1.2, P3, B)</label><input id="e_loc" value="A"></div>
+   <div class="toolbar" style="justify-content:flex-end"><button class="btn ghost" onclick="closeDlg()">Cancelar</button>
+   <button class="btn" onclick="DB.estoque.push({local:$('#e_loc').value.trim()||'Geral',item:$('#e_item').value.trim()});save();closeDlg();viewEstoque()">Salvar</button></div>`);
+}
+
+/* ---------- CONFIGURAÇÕES ---------- */
+function viewConfig(){
+  const c=DB.config;
+  $('#view').innerHTML=`
+  <div class="card"><h2>Parâmetros do negócio</h2>
+    <div class="grid g2">
+      ${[['custosIndiretos','Custos indiretos'],['taxaCartao','Taxa da maquininha'],['taxaDelivery','Taxa de delivery'],['markupPadrao','Markup padrão'],['metaMensal','Meta mensal (R$)']]
+        .map(([k,l])=>`<div class="field"><label class="f">${l}</label><input type="number" step="any" value="${c[k]??0}" onchange="DB.config['${k}']=+this.value;save();toast('Salvo')"></div>`).join('')}
+    </div>
+  </div>
+  <div class="card"><h2>Backup e planilha</h2>
+    <p class="sub">Exporte o JSON para versionar no repositório, ou o Excel para conferir fora do app.</p>
+    <div class="toolbar">
+      <button class="btn" onclick="exportJSON()">Baixar dados.json</button>
+      <button class="btn sec" onclick="exportXLSX()">Baixar Excel</button>
+      <label class="btn ghost" style="cursor:pointer">Importar JSON<input type="file" accept=".json" hidden onchange="importJSON(this)"></label>
+      <button class="btn dang" onclick="if(confirm('Apagar os dados salvos neste aparelho e recarregar do repositório?')){localStorage.removeItem('${KEY}');location.reload()}">Recarregar do repositório</button>
+    </div>
+  </div>
+  <div class="card"><h2>Sincronizar com o GitHub</h2>
+    <p class="sub">Com um token pessoal, cada alteração é gravada no <code>dados.json</code> do repositório e lida de volta ao abrir o app. Use um repositório <strong>privado</strong>: o token fica salvo neste navegador.</p>
+    <div class="grid g2">
+      <div class="field"><label class="f">Usuário/organização</label><input id="g_owner" value="${esc(GH.owner)}"></div>
+      <div class="field"><label class="f">Repositório</label><input id="g_repo" value="${esc(GH.repo)}"></div>
+      <div class="field"><label class="f">Branch</label><input id="g_branch" value="${esc(GH.branch)}"></div>
+      <div class="field"><label class="f">Caminho do arquivo</label><input id="g_path" value="${esc(GH.path)}"></div>
+      <div class="field"><label class="f">Token pessoal (escopo Contents: read/write)</label><input id="g_token" type="password" value="${esc(GH.token)}"></div>
+      <div class="field"><label class="f">Salvar automaticamente</label><select id="g_auto"><option value="1" ${GH.auto?'selected':''}>Sim</option><option value="" ${!GH.auto?'selected':''}>Não</option></select></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn" onclick="saveGH()">Salvar configuração</button>
+      <button class="btn sec" onclick="ghSave().catch(e=>toast('Erro: '+e.message))">Enviar agora ao GitHub</button>
+      <button class="btn ghost" onclick="ghLoad().then(d=>{DB=d;save(false);toast('Baixado do GitHub');go(atual)}).catch(e=>toast('Erro: '+e.message))">Baixar do GitHub</button>
+    </div>
+  </div>`;
+}
+function saveGH(){
+  GH={owner:$('#g_owner').value.trim(),repo:$('#g_repo').value.trim(),branch:$('#g_branch').value.trim()||'main',
+      path:$('#g_path').value.trim()||'dados.json',token:$('#g_token').value.trim(),auto:!!$('#g_auto').value};
+  localStorage.setItem(CFGKEY,JSON.stringify(GH));SHA=null;toast('Configuração salva');
+}
+
+/* ---------- exportações ---------- */
+function baixar(nome,conteudo,tipo){
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([conteudo],{type:tipo}));a.download=nome;a.click();
+}
+function exportJSON(){baixar('dados.json',JSON.stringify(DB,null,1),'application/json');}
+function importJSON(el){
+  const f=el.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{DB=JSON.parse(r.result);save();toast('Importado');go(atual)}catch(e){toast('JSON inválido')}};
+  r.readAsText(f);
+}
+function exportXLSX(){
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.insumos.map(i=>({'Matéria-prima':i.nome,'Unidade':i.unidade,'Quantidade':i.quantidade,'Valor total':i.valor,'Fator perda':i.perda,'Custo unitário':custoInsumo(i)}))),'Insumos');
+  const rec=[];DB.receitas.forEach(r=>r.itens.forEach(it=>rec.push({Receita:r.nome,Item:it.item,Unidade:it.unidade,Quantidade:it.quantidade,'Custo':custoItemReceita(it),'% Perda':r.perdaCoccao,'Custo receita':custoReceita(r),'Custo/kg':precoKg(r)})));
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rec),'Receitas');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.produtos.map(p=>{const r=precificar(p);return{Linha:p.linha,Produto:p.nome,'Custo unitário':p.custoUnit,'Custo c/ indiretos':r.total,Markup:p.markup,'Avulso':r.avulso,'Festas':r.festas,'Revenda':r.revenda,'Delivery':r.delivery,'Lucro':r.lucro}})),'Precificação');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.despesas),'Despesas');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.estoque.map(e=>({Nicho:e.local,Item:e.item,Acabando:e.acabando?'sim':''}))),'Estoque');
+  XLSX.writeFile(wb,'brigadeiraria.xlsx');
+}
+
+window.addEventListener('hashchange',()=>go(location.hash.slice(1)));
+boot();
+</script>
+</body>
+</html>
