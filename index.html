@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{
   --cacau:#3B2418; --cacau-2:#5A3A26; --creme:#FBF3E7; --creme-2:#F3E4CF;
@@ -73,6 +74,21 @@ dialog::backdrop{background:rgba(59,36,24,.45)}
 .locgroup summary{cursor:pointer;padding:10px 14px;background:var(--creme-2);font-weight:700}
 .locgroup ul{margin:0;padding:10px 14px 12px 30px}
 .locgroup li{padding:3px 0}
+#gate{position:fixed;inset:0;background:var(--creme);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+#gate .box{background:#fff;border:1px solid var(--linha);border-radius:18px;box-shadow:var(--sombra);max-width:420px;width:100%;padding:28px;text-align:center}
+#gate h2{font-size:24px;margin-bottom:6px}
+#gate p{color:var(--muted);font-size:14px;line-height:1.5}
+#gate .gbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--linha);border-radius:999px;padding:11px 20px;font:inherit;font-weight:700;cursor:pointer;color:var(--texto);margin-top:16px}
+#gate .gbtn:hover{background:var(--creme-2)}
+#gate .erro{background:#FDEEF0;color:#B23A48;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:14px;text-align:left}
+.sync{font-size:12px;color:#D9BFA6;display:inline-flex;align-items:center;gap:6px}
+.sync b{width:8px;height:8px;border-radius:50%;background:#8ED0A8;display:inline-block}
+.sync.wait b{background:var(--amarelo)}
+.sync.err b{background:#E58A96}
+.verlist{display:flex;flex-direction:column;gap:8px}
+.ver{border:1px solid var(--linha);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ver .quando{font-weight:700}
+.ver .quem{font-size:12px;color:var(--muted)}
 @media print{header,nav,.noprint{display:none!important}main{padding:0}.card{box-shadow:none;border:0}}
 </style>
 </head>
@@ -80,20 +96,33 @@ dialog::backdrop{background:rgba(59,36,24,.45)}
 <header><div class="hrow">
   <h1>🍫 Brigadeiraria</h1>
   <span class="tag" id="hdrInfo">carregando…</span>
+  <span class="sync noprint" id="sync" hidden><b></b><span id="syncTxt"></span></span>
   <span style="flex:1"></span>
+  <span class="tag noprint" id="userChip"></span>
+  <button class="btn sec noprint" onclick="salvarAgora()">Salvar agora</button>
   <button class="btn sec noprint" onclick="exportJSON()">Exportar JSON</button>
   <button class="btn sec noprint" onclick="exportXLSX()">Exportar Excel</button>
+  <button class="btn ghost noprint" style="color:#EBD9C4;border-color:#6b4a34" onclick="sair()">Sair</button>
 </div></header>
 <nav><div class="inner" id="tabs"></div></nav>
 <main id="view"></main>
 <div id="toast"></div>
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<div id="gate"><div class="box">
+  <h2>🍫 Brigadeiraria</h2>
+  <p>Painel interno. Entre com a conta Google autorizada para carregar os dados do Google Drive.</p>
+  <button class="gbtn" id="btnLogin" onclick="entrar()">
+    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.6 30.2.5 24 .5 14.6.5 6.5 5.9 2.6 13.7l7.8 6.1C12.3 13.7 17.6 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-2.8-.4-4.1H24v7.8h12.6c-.3 2.1-1.6 5.2-4.7 7.3l7.6 5.9c4.5-4.2 6.6-10.3 6.6-16.9z"/><path fill="#FBBC05" d="M10.4 28.2a14.5 14.5 0 0 1 0-8.4l-7.8-6.1a24 24 0 0 0 0 20.6l7.8-6.1z"/><path fill="#34A853" d="M24 47.5c6.2 0 11.5-2 15.3-5.6l-7.6-5.9c-2 1.4-4.7 2.4-7.7 2.4-6.4 0-11.7-4.2-13.6-10.2l-7.8 6.1C6.5 42.1 14.6 47.5 24 47.5z"/></svg>
+    Entrar com Google
+  </button>
+  <div class="erro" id="gateErro" hidden></div>
+</div></div>
 
 <script>
 /* ---------- utilidades ---------- */
 const $=(s,r=document)=>r.querySelector(s);
 const KEY='brigadeiraria.dados.v1';
-const CFGKEY='brigadeiraria.github.v1';
+const CFGKEY='brigadeiraria.cfg.v1';
 const BRL=n=>(Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const BRL4=n=>'R$ '+(Number(n)||0).toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4});
 const PCT=n=>((Number(n)||0)*100).toFixed(1).replace('.',',')+'%';
@@ -102,52 +131,228 @@ function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clea
 function openDlg(html){$('#dlgBody').innerHTML=html;$('#dlg').showModal();}
 function closeDlg(){$('#dlg').close();}
 
-let DB=null, GH=JSON.parse(localStorage.getItem(CFGKEY)||'null')||{owner:'',repo:'',branch:'main',path:'dados.json',token:'',auto:false};
-let SHA=null;
+/* =========================================================
+   CONFIGURAÇÃO — edite estas duas linhas
+   1) Client ID do OAuth criado no Google Cloud (veja o README)
+   2) E-mails Google que podem usar o app
+   ========================================================= */
+const CLIENT_ID = '767955501543-aakf19stvvftp9idunq8a0blotavdq8l.apps.googleusercontent.com';
+const EMAILS_AUTORIZADOS = [
+  'siomaracampos.brigs@gmail.com',
+  'sims.creiando@gmail.com',
+];
+/* ========================================================= */
 
-/* ---------- carga e persistência ---------- */
+const PASTA='Brigadeiraria App', ARQUIVO='dados.json', PASTA_HIST='Histórico', MAX_VERSOES=50;
+const SCOPES='https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email';
+const VAZIO=()=>({config:{taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0},insumos:[],receitas:[],produtos:[],despesas:[],estoque:[]});
+
+let DB=null, TOKEN=null, USER=null, tokenClient=null;
+let IDS={pasta:null,arquivo:null,hist:null}, REV=null, dirty=false, timerSalvar=null, salvando=false;
+
+/* ---------- login com Google ---------- */
+function gateErro(msg){const e=$('#gateErro');e.hidden=!msg;e.textContent=msg||'';}
+function esperaGIS(){return new Promise(res=>{const t=setInterval(()=>{if(window.google&&google.accounts&&google.accounts.oauth2){clearInterval(t);res()}},120)})}
+
+async function iniciarAuth(){
+  if(CLIENT_ID.startsWith('COLE_AQUI')){ gateErro('Falta configurar o Client ID do Google no topo do index.html. O passo a passo está no README.'); return; }
+  await esperaGIS();
+  tokenClient=google.accounts.oauth2.initTokenClient({
+    client_id:CLIENT_ID, scope:SCOPES,
+    callback:async resp=>{
+      if(resp.error){ gateErro('Não foi possível entrar: '+resp.error); return; }
+      TOKEN=resp.access_token;
+      try{ await depoisDoLogin(); }catch(e){ gateErro(e.message); }
+    }
+  });
+  tokenClient.requestAccessToken({prompt:''});   // tenta entrar em silêncio
+}
+function entrar(){ gateErro(''); if(tokenClient) tokenClient.requestAccessToken({prompt:'consent'}); else iniciarAuth(); }
+function renovarToken(){return new Promise((res,rej)=>{
+  const cb=tokenClient.callback;
+  tokenClient.callback=r=>{tokenClient.callback=cb; if(r.error){rej(new Error(r.error))}else{TOKEN=r.access_token;res()}};
+  tokenClient.requestAccessToken({prompt:''});
+})}
+function sair(){
+  if(TOKEN&&window.google) google.accounts.oauth2.revoke(TOKEN,()=>{});
+  TOKEN=null;USER=null;location.reload();
+}
+
+async function depoisDoLogin(){
+  const r=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+TOKEN}});
+  if(!r.ok) throw new Error('Não consegui confirmar sua conta Google.');
+  USER=await r.json();
+  const lista=EMAILS_AUTORIZADOS.map(e=>e.toLowerCase().trim()).filter(Boolean);
+  if(lista.length && !lista.includes((USER.email||'').toLowerCase())){
+    TOKEN=null; throw new Error('A conta '+USER.email+' não está autorizada a usar este painel.');
+  }
+  $('#userChip').textContent=USER.email;
+  $('#gate').style.display='none';
+  await boot();
+}
+
+/* ---------- Google Drive ---------- */
+async function drive(url,opt={},retry=true){
+  const o=Object.assign({},opt,{headers:Object.assign({Authorization:'Bearer '+TOKEN},opt.headers||{})});
+  const r=await fetch(url,o);
+  if(r.status===401&&retry){ await renovarToken(); return drive(url,opt,false); }
+  if(!r.ok) throw new Error('Drive '+r.status+': '+(await r.text()).slice(0,180));
+  return r;
+}
+const q=s=>encodeURIComponent(s);
+async function achar(query,fields='files(id,name,createdTime,appProperties)'){
+  const r=await drive(`https://www.googleapis.com/drive/v3/files?q=${q(query)}&fields=${q(fields)}&orderBy=createdTime desc&pageSize=200&spaces=drive`);
+  return (await r.json()).files||[];
+}
+async function criar(meta){
+  const r=await drive('https://www.googleapis.com/drive/v3/files?fields=id',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)});
+  return (await r.json()).id;
+}
+async function pasta(nome,paiId){
+  const filtro=`mimeType='application/vnd.google-apps.folder' and name='${nome.replace(/'/g,"\\'")}' and trashed=false`+(paiId?` and '${paiId}' in parents`:'');
+  const f=await achar(filtro);
+  if(f[0]) return f[0].id;
+  return criar({name:nome,mimeType:'application/vnd.google-apps.folder',parents:paiId?[paiId]:undefined});
+}
+async function subir(conteudo,meta,fileId){
+  const limite='-------brig'+Date.now();
+  const corpo='--'+limite+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(meta)+
+    '\r\n--'+limite+'\r\nContent-Type: application/json\r\n\r\n'+conteudo+'\r\n--'+limite+'--';
+  const url=fileId
+    ? `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart&fields=id,headRevisionId`
+    : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,headRevisionId';
+  const r=await drive(url,{method:fileId?'PATCH':'POST',headers:{'Content-Type':'multipart/related; boundary='+limite},body:corpo});
+  return r.json();
+}
+async function lerArquivo(id){
+  const r=await drive(`https://www.googleapis.com/drive/v3/files/${id}?alt=media`);
+  return r.json();
+}
+
+/* ---------- carga ---------- */
 async function boot(){
-  const local=localStorage.getItem(KEY);
-  if(GH.token&&GH.owner&&GH.repo){
-    try{ const remoto=await ghLoad(); if(remoto){DB=remoto; save(false); okBoot('sincronizado com o GitHub'); return;} }catch(e){ console.warn(e); }
+  estado('wait','conectando ao Drive…');
+  IDS.pasta=await pasta(PASTA,null);
+  IDS.hist=await pasta(PASTA_HIST,IDS.pasta);
+  const arq=await achar(`name='${ARQUIVO}' and '${IDS.pasta}' in parents and trashed=false`,'files(id,headRevisionId)');
+  if(arq[0]){
+    IDS.arquivo=arq[0].id; REV=arq[0].headRevisionId;
+    DB=await lerArquivo(IDS.arquivo);
+    okBoot('Google Drive · '+PASTA);
+  }else{
+    let inicial=null;
+    try{ inicial=JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){}
+    if(!inicial){ try{ inicial=await (await fetch('dados.json',{cache:'no-store'})).json(); }catch(e){} }
+    DB=inicial||VAZIO();
+    const j=await subir(JSON.stringify(DB,null,1),{name:ARQUIVO,parents:[IDS.pasta],mimeType:'application/json'});
+    IDS.arquivo=j.id; REV=j.headRevisionId;
+    okBoot('Drive · arquivo criado agora');
   }
-  if(local){ DB=JSON.parse(local); okBoot('dados locais'); return; }
-  try{
-    const r=await fetch('dados.json',{cache:'no-store'});
-    DB=await r.json(); save(false); okBoot('dados.json do repositório');
-  }catch(e){
-    DB={config:{taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0},insumos:[],receitas:[],produtos:[],despesas:[],estoque:[]};
-    okBoot('vazio — importe o dados.json em Configurações');
-  }
+  estado('ok','salvo');
 }
 function okBoot(origem){
-  DB.config=Object.assign({taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0},DB.config||{});
+  DB.config=Object.assign(VAZIO().config,DB.config||{});
   ['insumos','receitas','produtos','despesas','estoque'].forEach(k=>DB[k]=DB[k]||[]);
+  localStorage.setItem(KEY,JSON.stringify(DB));
   $('#hdrInfo').textContent=origem;
   renderTabs(); go(location.hash.slice(1)||'insumos');
 }
-function save(sync=true){
-  localStorage.setItem(KEY,JSON.stringify(DB));
-  if(sync&&GH.auto&&GH.token&&GH.owner&&GH.repo) ghSave().catch(e=>toast('Falha ao sincronizar: '+e.message));
-}
 
-/* ---------- GitHub ---------- */
-function ghUrl(){return `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`;}
-async function ghLoad(){
-  const r=await fetch(ghUrl()+'?ref='+encodeURIComponent(GH.branch),{headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json'}});
-  if(!r.ok) throw new Error(r.status+' '+await r.text());
-  const j=await r.json(); SHA=j.sha;
-  return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));
+/* ---------- salvamento ---------- */
+function estado(cls,txt){const s=$('#sync');s.hidden=false;s.className='sync noprint'+(cls==='ok'?'':' '+cls);$('#syncTxt').textContent=txt;}
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(DB));
+  dirty=true; estado('wait','alterações não salvas');
+  clearTimeout(timerSalvar); timerSalvar=setTimeout(()=>salvarDrive().catch(()=>{}),3000);
 }
-async function ghSave(){
-  if(!SHA){ try{await ghLoad();}catch(e){} }
-  const body={message:'atualiza dados via app '+new Date().toISOString(),branch:GH.branch,
-    content:btoa(unescape(encodeURIComponent(JSON.stringify(DB,null,1))))};
-  if(SHA) body.sha=SHA;
-  const r=await fetch(ghUrl(),{method:'PUT',headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify(body)});
-  if(!r.ok) throw new Error(r.status+' '+await r.text());
-  SHA=(await r.json()).content.sha;
-  toast('Salvo no GitHub');
+function salvarAgora(){ clearTimeout(timerSalvar); salvarDrive(prompt('Comentário desta versão (opcional):')||'').then(()=>toast('Salvo no Drive')).catch(e=>toast('Erro: '+e.message)); }
+
+async function salvarDrive(comentario=''){
+  if(!IDS.arquivo||salvando) return;
+  salvando=true; estado('wait','salvando…');
+  try{
+    const meta=await (await drive(`https://www.googleapis.com/drive/v3/files/${IDS.arquivo}?fields=headRevisionId,lastModifyingUser(emailAddress)`)).json();
+    if(REV&&meta.headRevisionId&&meta.headRevisionId!==REV){
+      const quem=meta.lastModifyingUser?.emailAddress||'outra pessoa';
+      if(!confirm(`Os dados foram alterados por ${quem} enquanto você editava.\n\nOK = sobrescrever com a sua versão\nCancelar = recarregar a versão do Drive`)){
+        salvando=false; location.reload(); return;
+      }
+    }
+    const j=await subir(JSON.stringify(DB,null,1),{mimeType:'application/json'},IDS.arquivo);
+    REV=j.headRevisionId; dirty=false;
+    await snapshot(comentario);
+    estado('ok','salvo '+new Date().toLocaleTimeString('pt-BR').slice(0,5));
+  }catch(e){
+    estado('err','sem conexão — salvo só neste aparelho');
+    throw e;
+  }finally{ salvando=false; }
+}
+async function snapshot(comentario){
+  const d=new Date(), p=n=>String(n).padStart(2,'0');
+  const nome=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}-${p(d.getMinutes())}-${p(d.getSeconds())}.json`;
+  await subir(JSON.stringify(DB),{name:nome,parents:[IDS.hist],mimeType:'application/json',
+    appProperties:{autor:USER?.email||'',comentario:(comentario||'').slice(0,120)}});
+  const vs=await achar(`'${IDS.hist}' in parents and trashed=false`);
+  for(const v of vs.slice(MAX_VERSOES)) drive(`https://www.googleapis.com/drive/v3/files/${v.id}`,{method:'DELETE'}).catch(()=>{});
+}
+window.addEventListener('online',()=>{ if(dirty) salvarDrive().catch(()=>{}); });
+window.addEventListener('beforeunload',e=>{ if(dirty){e.preventDefault();e.returnValue='';} });
+
+/* ---------- histórico de versões ---------- */
+let versoes=[];
+async function viewHistorico(){
+  $('#view').innerHTML=`<div class="card"><h2>Histórico de versões</h2><p class="sub">Carregando do Drive…</p></div>`;
+  try{ versoes=await achar(`'${IDS.hist}' in parents and trashed=false`); }catch(e){ versoes=[]; }
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>Histórico de versões</h2>
+    <p class="sub">Cada salvamento gera uma cópia na pasta <strong>${PASTA} › ${PASTA_HIST}</strong> do seu Drive. Guardamos as ${MAX_VERSOES} mais recentes.</p>
+    <div class="toolbar"><button class="btn" onclick="salvarAgora()">Salvar versão agora</button>
+      <button class="btn ghost" onclick="viewHistorico()">Atualizar lista</button></div>
+    <div class="verlist">${versoes.map(v=>{
+      const d=new Date(v.createdTime), ap=v.appProperties||{};
+      return `<div class="ver">
+        <div style="flex:1;min-width:200px">
+          <div class="quando">${d.toLocaleDateString('pt-BR')} às ${d.toLocaleTimeString('pt-BR').slice(0,5)}</div>
+          <div class="quem">${esc(ap.autor||'—')}${ap.comentario?' · '+esc(ap.comentario):''}</div>
+        </div>
+        <button class="btn ghost" onclick="verVersao('${v.id}')">Ver o que mudou</button>
+        <button class="btn sec" onclick="restaurar('${v.id}')">Restaurar</button>
+        <button class="btn dang" onclick="excluirVersao('${v.id}')">Excluir</button>
+      </div>`}).join('')||'<p class="muted">Nenhuma versão salva ainda.</p>'}
+    </div>
+  </div>`;
+}
+const contar=d=>['insumos','receitas','produtos','despesas','estoque'].map(k=>[k,(d[k]||[]).length]);
+async function verVersao(id){
+  try{
+    const antiga=await lerArquivo(id);
+    const a=Object.fromEntries(contar(antiga));
+    openDlg(`<h3>Comparação com os dados atuais</h3>
+     <div class="wrap"><table><thead><tr><th>Seção</th><th class="num">Nessa versão</th><th class="num">Agora</th><th class="num">Diferença</th></tr></thead><tbody>
+     ${contar(DB).map(([k,n])=>{const d=n-(a[k]||0);return `<tr><td style="text-transform:capitalize">${k}</td><td class="num">${a[k]||0}</td><td class="num">${n}</td>
+       <td class="num"><strong>${d>0?'+'+d:d}</strong></td></tr>`}).join('')}
+     </tbody></table></div>
+     <div class="toolbar" style="justify-content:flex-end;margin-top:12px"><button class="btn ghost" onclick="closeDlg()">Fechar</button>
+     <button class="btn" onclick="closeDlg();restaurar('${id}')">Restaurar esta versão</button></div>`);
+  }catch(e){ toast('Erro: '+e.message); }
+}
+async function restaurar(id){
+  if(!confirm('Restaurar esta versão? A versão atual será guardada no histórico antes.')) return;
+  try{
+    await salvarDrive('antes de restaurar');
+    DB=await lerArquivo(id);
+    DB.config=Object.assign(VAZIO().config,DB.config||{});
+    ['insumos','receitas','produtos','despesas','estoque'].forEach(k=>DB[k]=DB[k]||[]);
+    await salvarDrive('versão restaurada');
+    localStorage.setItem(KEY,JSON.stringify(DB));
+    toast('Versão restaurada'); viewHistorico();
+  }catch(e){ toast('Erro: '+e.message); }
+}
+async function excluirVersao(id){
+  if(!confirm('Excluir esta versão do histórico?')) return;
+  try{ await drive(`https://www.googleapis.com/drive/v3/files/${id}`,{method:'DELETE'}); viewHistorico(); }
+  catch(e){ toast('Erro: '+e.message); }
 }
 
 /* ---------- cálculos ---------- */
@@ -177,7 +382,7 @@ function precificar(p){
 const despesaTotal=()=>DB.despesas.reduce((s,d)=>s+(Number(d.valor)||0),0);
 
 /* ---------- navegação ---------- */
-const TABS=[['insumos','Insumos'],['receitas','Receitas'],['precificacao','Precificação'],['orcamento','Orçamento'],['estoque','Estoque'],['config','Configurações']];
+const TABS=[['insumos','Insumos'],['receitas','Receitas'],['precificacao','Precificação'],['orcamento','Orçamento'],['estoque','Estoque'],['historico','Histórico'],['config','Configurações']];
 let atual='insumos';
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-k="${k}" onclick="go('${k}')">${l}</button>`).join('');}
 function go(k){
@@ -185,7 +390,7 @@ function go(k){
   atual=k;location.hash=k;
   document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
   window.scrollTo(0,0);
-  ({insumos:viewInsumos,receitas:viewReceitas,precificacao:viewPrecificacao,orcamento:viewOrcamento,estoque:viewEstoque,config:viewConfig}[k])();
+  ({insumos:viewInsumos,receitas:viewReceitas,precificacao:viewPrecificacao,orcamento:viewOrcamento,estoque:viewEstoque,historico:viewHistorico,config:viewConfig}[k])();
 }
 
 /* ---------- INSUMOS ---------- */
@@ -496,30 +701,24 @@ function viewConfig(){
       <button class="btn" onclick="exportJSON()">Baixar dados.json</button>
       <button class="btn sec" onclick="exportXLSX()">Baixar Excel</button>
       <label class="btn ghost" style="cursor:pointer">Importar JSON<input type="file" accept=".json" hidden onchange="importJSON(this)"></label>
-      <button class="btn dang" onclick="if(confirm('Apagar os dados salvos neste aparelho e recarregar do repositório?')){localStorage.removeItem('${KEY}');location.reload()}">Recarregar do repositório</button>
+      <button class="btn dang" onclick="if(confirm('Descartar o cache deste aparelho e recarregar do Google Drive?')){localStorage.removeItem('${KEY}');location.reload()}">Recarregar do Drive</button>
     </div>
   </div>
-  <div class="card"><h2>Sincronizar com o GitHub</h2>
-    <p class="sub">Com um token pessoal, cada alteração é gravada no <code>dados.json</code> do repositório e lida de volta ao abrir o app. Use um repositório <strong>privado</strong>: o token fica salvo neste navegador.</p>
-    <div class="grid g2">
-      <div class="field"><label class="f">Usuário/organização</label><input id="g_owner" value="${esc(GH.owner)}"></div>
-      <div class="field"><label class="f">Repositório</label><input id="g_repo" value="${esc(GH.repo)}"></div>
-      <div class="field"><label class="f">Branch</label><input id="g_branch" value="${esc(GH.branch)}"></div>
-      <div class="field"><label class="f">Caminho do arquivo</label><input id="g_path" value="${esc(GH.path)}"></div>
-      <div class="field"><label class="f">Token pessoal (escopo Contents: read/write)</label><input id="g_token" type="password" value="${esc(GH.token)}"></div>
-      <div class="field"><label class="f">Salvar automaticamente</label><select id="g_auto"><option value="1" ${GH.auto?'selected':''}>Sim</option><option value="" ${!GH.auto?'selected':''}>Não</option></select></div>
+  <div class="card"><h2>Conta e sincronização</h2>
+    <p class="sub">Os dados ficam no seu Google Drive, na pasta <strong>${PASTA}</strong>, no arquivo <code>${ARQUIVO}</code>. Cada salvamento também gera uma cópia em <strong>${PASTA_HIST}</strong>.</p>
+    <div class="grid g3" style="margin-bottom:12px">
+      <div class="kpi"><div class="lab">Conta conectada</div><div class="val" style="font-size:16px">${esc(USER?.email||'—')}</div></div>
+      <div class="kpi"><div class="lab">Salvamento</div><div class="val" style="font-size:16px">automático (3s)</div></div>
+      <div class="kpi"><div class="lab">Versões guardadas</div><div class="val" style="font-size:16px">até ${MAX_VERSOES}</div></div>
     </div>
+    <p class="sub">Para trabalhar com outra pessoa: compartilhe a pasta <strong>${PASTA}</strong> no Google Drive com o Google dela e inclua o e-mail na lista <code>EMAILS_AUTORIZADOS</code>, no topo do <code>index.html</code>.</p>
     <div class="toolbar">
-      <button class="btn" onclick="saveGH()">Salvar configuração</button>
-      <button class="btn sec" onclick="ghSave().catch(e=>toast('Erro: '+e.message))">Enviar agora ao GitHub</button>
-      <button class="btn ghost" onclick="ghLoad().then(d=>{DB=d;save(false);toast('Baixado do GitHub');go(atual)}).catch(e=>toast('Erro: '+e.message))">Baixar do GitHub</button>
+      <button class="btn" onclick="salvarAgora()">Salvar no Drive agora</button>
+      <button class="btn sec" onclick="go('historico')">Ver histórico de versões</button>
+      <a class="btn ghost" style="text-decoration:none;display:inline-block" href="https://drive.google.com/drive/search?q=${encodeURIComponent(PASTA)}" target="_blank" rel="noopener">Abrir pasta no Drive</a>
+      <button class="btn dang" onclick="sair()">Sair da conta</button>
     </div>
   </div>`;
-}
-function saveGH(){
-  GH={owner:$('#g_owner').value.trim(),repo:$('#g_repo').value.trim(),branch:$('#g_branch').value.trim()||'main',
-      path:$('#g_path').value.trim()||'dados.json',token:$('#g_token').value.trim(),auto:!!$('#g_auto').value};
-  localStorage.setItem(CFGKEY,JSON.stringify(GH));SHA=null;toast('Configuração salva');
 }
 
 /* ---------- exportações ---------- */
@@ -543,8 +742,8 @@ function exportXLSX(){
   XLSX.writeFile(wb,'brigadeiraria.xlsx');
 }
 
-window.addEventListener('hashchange',()=>go(location.hash.slice(1)));
-boot();
+window.addEventListener('hashchange',()=>{ if(DB) go(location.hash.slice(1)); });
+iniciarAuth();
 </script>
 </body>
 </html>
