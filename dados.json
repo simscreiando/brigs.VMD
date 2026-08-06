@@ -1,0 +1,4919 @@
+{
+ "versao": 2,
+ "config": {
+  "taxaDelivery": 0.305,
+  "taxaCartao": 0.04,
+  "custosIndiretos": 0.15,
+  "markupPadrao": 2.85,
+  "metaMensal": 7180,
+  "fatorTamanho": 1.0625,
+  "fatorFestas": 0.8,
+  "fatorRevenda": 0.63462,
+  "fatorDelivery": 1.25482,
+  "acrescimoCento": 8
+ },
+ "insumos": [
+  {
+   "nome": "Açúcar Confeiteiro",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 2.25,
+   "perda": 0,
+   "custoUnit": 0.0045
+  },
+  {
+   "nome": "Açúcar Confeiteiro 1kg",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 4.98,
+   "perda": 0,
+   "custoUnit": 0.00498
+  },
+  {
+   "nome": "Açúcar Cristal",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 1.9,
+   "perda": 0,
+   "custoUnit": 0.0019
+  },
+  {
+   "nome": "Açúcar Demerara",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 4.27,
+   "perda": 0,
+   "custoUnit": 0.00427
+  },
+  {
+   "nome": "Amendoim triturado",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 18,
+   "perda": 0,
+   "custoUnit": 0.018
+  },
+  {
+   "nome": "Amido de milho",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 3.4,
+   "perda": 0,
+   "custoUnit": 0.017
+  },
+  {
+   "nome": "Bicarbonato",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 2.16,
+   "perda": 0,
+   "custoUnit": 0.00432
+  },
+  {
+   "nome": "Biscoito Oreo gotas",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 26.5,
+   "perda": 0,
+   "custoUnit": 0.0265
+  },
+  {
+   "nome": "Brigadeiro base beijinho",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 18.35,
+   "perda": 0,
+   "custoUnit": 0.0367
+  },
+  {
+   "nome": "Brigadeiro Base Branco",
+   "unidade": "Gramas",
+   "quantidade": 432,
+   "valor": 13,
+   "perda": 0,
+   "custoUnit": 0.03009259
+  },
+  {
+   "nome": "Brigadeiro base café",
+   "unidade": "Gramas",
+   "quantidade": 460,
+   "valor": 15.3165,
+   "perda": 0,
+   "custoUnit": 0.03329674
+  },
+  {
+   "nome": "Brigadeiro Base Chocolate",
+   "unidade": "Gramas",
+   "quantidade": 421,
+   "valor": 15.9665,
+   "perda": 0,
+   "custoUnit": 0.03792518
+  },
+  {
+   "nome": "Brigadeiro base Limão",
+   "unidade": "Gramas",
+   "quantidade": 440,
+   "valor": 14.777273,
+   "perda": 0,
+   "custoUnit": 0.03358471
+  },
+  {
+   "nome": "Brigadeiro base maracujá",
+   "unidade": "Gramas",
+   "quantidade": 440,
+   "valor": 15.625652,
+   "perda": 0,
+   "custoUnit": 0.03551284
+  },
+  {
+   "nome": "Brigadeiro base nesquik",
+   "unidade": "Gramas",
+   "quantidade": 440,
+   "valor": 16.5151,
+   "perda": 0,
+   "custoUnit": 0.03753432
+  },
+  {
+   "nome": "Brigadeiro base Ninho",
+   "unidade": "Gramas",
+   "quantidade": 466,
+   "valor": 16.433316,
+   "perda": 0,
+   "custoUnit": 0.03526463
+  },
+  {
+   "nome": "Brigadeiro base Nutella",
+   "unidade": "Gramas",
+   "quantidade": 512,
+   "valor": 20,
+   "perda": 0,
+   "custoUnit": 0.0390625
+  },
+  {
+   "nome": "Cacau 100% dr. oetcker",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 17,
+   "perda": 0,
+   "custoUnit": 0.085
+  },
+  {
+   "nome": "Cachaça",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 5,
+   "perda": 0,
+   "custoUnit": 0.025
+  },
+  {
+   "nome": "Café inst 50g",
+   "unidade": "Gramas",
+   "quantidade": 50,
+   "valor": 5.99,
+   "perda": 0,
+   "custoUnit": 0.1198
+  },
+  {
+   "nome": "Caixa nº 5",
+   "unidade": "Unidade",
+   "quantidade": 10,
+   "valor": 48.1,
+   "perda": 0,
+   "custoUnit": 4.81
+  },
+  {
+   "nome": "Canela",
+   "unidade": "Gramas",
+   "quantidade": 50,
+   "valor": 3,
+   "perda": 0,
+   "custoUnit": 0.06
+  },
+  {
+   "nome": "capuccino baunilha 3 coracoes",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 20,
+   "perda": 0,
+   "custoUnit": 0.1
+  },
+  {
+   "nome": "Capuccino Caramelo Salgado - 3 Corações",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 22,
+   "perda": 0,
+   "custoUnit": 0.11
+  },
+  {
+   "nome": "capuccino marata  chocolate",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 13.75,
+   "perda": 0,
+   "custoUnit": 0.06875
+  },
+  {
+   "nome": "Capuccino Maratá doce de leite e baunilha",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 13.75,
+   "perda": 0,
+   "custoUnit": 0.06875
+  },
+  {
+   "nome": "Castanha",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 65,
+   "perda": 0,
+   "custoUnit": 0.065
+  },
+  {
+   "nome": "Cereja em calda",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 14.35,
+   "perda": 0,
+   "custoUnit": 0.1435
+  },
+  {
+   "nome": "Chocolate Alpino",
+   "unidade": "Gramas",
+   "quantidade": 85,
+   "valor": 12,
+   "perda": 0,
+   "custoUnit": 0.14117647
+  },
+  {
+   "nome": "Chocolate blend sicao",
+   "unidade": "Gramas",
+   "quantidade": 2000,
+   "valor": 170,
+   "perda": 0,
+   "custoUnit": 0.085
+  },
+  {
+   "nome": "Chocolate branco genuine",
+   "unidade": "Gramas",
+   "quantidade": 2000,
+   "valor": 250,
+   "perda": 0,
+   "custoUnit": 0.125
+  },
+  {
+   "nome": "Chocolate Cobertura Avelã TOP Harald",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 50,
+   "perda": 0,
+   "custoUnit": 0.05
+  },
+  {
+   "nome": "Chocolate Cobertura Caramelo TOP Harald",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 52.5,
+   "perda": 0,
+   "custoUnit": 0.0525
+  },
+  {
+   "nome": "Chocolate em barra ao leite",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 38,
+   "perda": 0,
+   "custoUnit": 0.038
+  },
+  {
+   "nome": "chocolate em barra blend",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 41.5,
+   "perda": 0,
+   "custoUnit": 0.0415
+  },
+  {
+   "nome": "Chocolate em barra branco",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 41,
+   "perda": 0,
+   "custoUnit": 0.041
+  },
+  {
+   "nome": "chocolate em barra meio amargo",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 38,
+   "perda": 0,
+   "custoUnit": 0.038
+  },
+  {
+   "nome": "Chocolate em pó",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 10,
+   "perda": 0,
+   "custoUnit": 0.05
+  },
+  {
+   "nome": "Chocolate em pó 50%",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 15,
+   "perda": 0,
+   "custoUnit": 0.075
+  },
+  {
+   "nome": "chocolate em pó 50% cacau",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 14,
+   "perda": 0,
+   "custoUnit": 0.07
+  },
+  {
+   "nome": "Chocolate em Pó Alpino",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 35,
+   "perda": 0,
+   "custoUnit": 0.035
+  },
+  {
+   "nome": "Chocolate em pó melken 50%",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 60,
+   "perda": 0,
+   "custoUnit": 0.06
+  },
+  {
+   "nome": "Chocolate em pó tradicional dr oetcker",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 24,
+   "perda": 0,
+   "custoUnit": 0.12
+  },
+  {
+   "nome": "Chocolate meio amargo sicao",
+   "unidade": "Gramas",
+   "quantidade": 2000,
+   "valor": 93,
+   "perda": 0,
+   "custoUnit": 0.0465
+  },
+  {
+   "nome": "Cobertura chocolate ao leite genuine",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 29,
+   "perda": 0,
+   "custoUnit": 0.029
+  },
+  {
+   "nome": "Cobertura chocolate branco genuine",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 29,
+   "perda": 0,
+   "custoUnit": 0.029
+  },
+  {
+   "nome": "Cobertura chocolate meio amargo genuine",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 29,
+   "perda": 0,
+   "custoUnit": 0.029
+  },
+  {
+   "nome": "Coco ralado",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 6.5,
+   "perda": 0,
+   "custoUnit": 0.065
+  },
+  {
+   "nome": "Coco Ralado Adoçado Flocos",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 7,
+   "perda": 0,
+   "custoUnit": 0.07
+  },
+  {
+   "nome": "Coco Ralado desidratado",
+   "unidade": "Gramas",
+   "quantidade": 50,
+   "valor": 2.7,
+   "perda": 0,
+   "custoUnit": 0.054
+  },
+  {
+   "nome": "Coco ralado queimado",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 5.79,
+   "perda": 0,
+   "custoUnit": 0.0579
+  },
+  {
+   "nome": "Confeito confete coloreti",
+   "unidade": "Gramas",
+   "quantidade": 396,
+   "valor": 15.5,
+   "perda": 0,
+   "custoUnit": 0.03914141
+  },
+  {
+   "nome": "Confeito crocante colorir",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 18.5,
+   "perda": 0,
+   "custoUnit": 0.037
+  },
+  {
+   "nome": "Confeito miçanga",
+   "unidade": "Gramas",
+   "quantidade": 300,
+   "valor": 8.5,
+   "perda": 0,
+   "custoUnit": 0.02833333
+  },
+  {
+   "nome": "corante em pó",
+   "unidade": "Gramas",
+   "quantidade": 3,
+   "valor": 3.3,
+   "perda": 0,
+   "custoUnit": 1.1
+  },
+  {
+   "nome": "Cream cheese",
+   "unidade": "Gramas",
+   "quantidade": 150,
+   "valor": 9.7,
+   "perda": 0,
+   "custoUnit": 0.06466667
+  },
+  {
+   "nome": "Creme de leite",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 4,
+   "perda": 0,
+   "custoUnit": 0.02
+  },
+  {
+   "nome": "Creme Kit Kat",
+   "unidade": "Gramas",
+   "quantidade": null,
+   "valor": 65,
+   "perda": 0,
+   "custoUnit": 0
+  },
+  {
+   "nome": "Creme Ovomaltine",
+   "unidade": "Gramas",
+   "quantidade": 660,
+   "valor": 39.99,
+   "perda": 0,
+   "custoUnit": 0.06059091
+  },
+  {
+   "nome": "Dióxido de Titânio",
+   "unidade": "Gramas",
+   "quantidade": 15,
+   "valor": 10,
+   "perda": 0,
+   "custoUnit": 0.66666667
+  },
+  {
+   "nome": "Doce de leite popular",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 12,
+   "perda": 0,
+   "custoUnit": 0.03
+  },
+  {
+   "nome": "Doce de leite sucupira",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 9,
+   "perda": 0,
+   "custoUnit": 0.0225
+  },
+  {
+   "nome": "Doce de leite triangulo",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 6,
+   "perda": 0,
+   "custoUnit": 0.015
+  },
+  {
+   "nome": "Ejetor Coração",
+   "unidade": "Unidade",
+   "quantidade": 4,
+   "valor": 39.6,
+   "perda": 0,
+   "custoUnit": 9.9
+  },
+  {
+   "nome": "Ejetor flor",
+   "unidade": "Unidade",
+   "quantidade": 4,
+   "valor": 39.6,
+   "perda": 0,
+   "custoUnit": 9.9
+  },
+  {
+   "nome": "Embalagem 4",
+   "unidade": "Gramas",
+   "quantidade": null,
+   "valor": 0,
+   "perda": 0,
+   "custoUnit": 0
+  },
+  {
+   "nome": "Embalagem 500 ml",
+   "unidade": "Unidade",
+   "quantidade": 300,
+   "valor": 89,
+   "perda": 0,
+   "custoUnit": 0.29666667
+  },
+  {
+   "nome": "Embalagem 750 ml",
+   "unidade": "Unidade",
+   "quantidade": 10,
+   "valor": 17.5,
+   "perda": 0,
+   "custoUnit": 1.75
+  },
+  {
+   "nome": "Essência de baunilha",
+   "unidade": "Gramas",
+   "quantidade": 30,
+   "valor": 4.3,
+   "perda": 0,
+   "custoUnit": 0.14333333
+  },
+  {
+   "nome": "fita cetim 2 10mm",
+   "unidade": "Gramas",
+   "quantidade": 10000,
+   "valor": 2.6,
+   "perda": 0,
+   "custoUnit": 0.00026
+  },
+  {
+   "nome": "fita cetim 3 15mm",
+   "unidade": "Gramas",
+   "quantidade": 10000,
+   "valor": 3.5,
+   "perda": 0,
+   "custoUnit": 0.00035
+  },
+  {
+   "nome": "Floco D. J. 500",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 10.89,
+   "perda": 0,
+   "custoUnit": 0.02178
+  },
+  {
+   "nome": "flocos de arroz",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 14.9,
+   "perda": 0,
+   "custoUnit": 0.0298
+  },
+  {
+   "nome": "Flocos dona jura",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 18,
+   "perda": 0,
+   "custoUnit": 0.018
+  },
+  {
+   "nome": "forma 4 petalas",
+   "unidade": "Unidade",
+   "quantidade": 50,
+   "valor": 2.99,
+   "perda": 0,
+   "custoUnit": 0.0598
+  },
+  {
+   "nome": "Forminhas nº 5",
+   "unidade": "Unidade",
+   "quantidade": 100,
+   "valor": 1.7,
+   "perda": 0,
+   "custoUnit": 0.017
+  },
+  {
+   "nome": "Forminhas nº 6",
+   "unidade": "Unidade",
+   "quantidade": 100,
+   "valor": 1,
+   "perda": 0,
+   "custoUnit": 0.01
+  },
+  {
+   "nome": "Gás receita nº 5",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 3.08,
+   "perda": 0,
+   "custoUnit": 3.08
+  },
+  {
+   "nome": "Gás receita nº 6",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 2.31,
+   "perda": 0,
+   "custoUnit": 2.31
+  },
+  {
+   "nome": "Gás unitário",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 1.15,
+   "perda": 0,
+   "custoUnit": 1.15
+  },
+  {
+   "nome": "Goiabada",
+   "unidade": "Gramas",
+   "quantidade": 300,
+   "valor": 3.69,
+   "perda": 0,
+   "custoUnit": 0.0123
+  },
+  {
+   "nome": "Granulado dona jura",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 18,
+   "perda": 0,
+   "custoUnit": 0.018
+  },
+  {
+   "nome": "granulado harald macio",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 15,
+   "perda": 0,
+   "custoUnit": 0.015
+  },
+  {
+   "nome": "Granulado Miçanga 300",
+   "unidade": "Gramas",
+   "quantidade": 300,
+   "valor": 7.89,
+   "perda": 0,
+   "custoUnit": 0.0263
+  },
+  {
+   "nome": "Granulée Melken Meio Amargo",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 38,
+   "perda": 0,
+   "custoUnit": 0.095
+  },
+  {
+   "nome": "Kinder Bueno",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 7.89,
+   "perda": 0,
+   "custoUnit": 7.89
+  },
+  {
+   "nome": "Kit Kat",
+   "unidade": "Gramas",
+   "quantidade": 41.5,
+   "valor": 3,
+   "perda": 0,
+   "custoUnit": 0.07228916
+  },
+  {
+   "nome": "Leite Condensado",
+   "unidade": "Gramas",
+   "quantidade": 395,
+   "valor": 7,
+   "perda": 0,
+   "custoUnit": 0.01772152
+  },
+  {
+   "nome": "Leite de côco",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 5.59,
+   "perda": 0,
+   "custoUnit": 0.02795
+  },
+  {
+   "nome": "Leite em pó",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 9,
+   "perda": 0,
+   "custoUnit": 0.045
+  },
+  {
+   "nome": "Leite em Pó Camponesa",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 7,
+   "perda": 0,
+   "custoUnit": 0.035
+  },
+  {
+   "nome": "Leite em po itambé",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 11,
+   "perda": 0,
+   "custoUnit": 0.055
+  },
+  {
+   "nome": "Leite Ninho pó - lata",
+   "unidade": "Gramas",
+   "quantidade": 380,
+   "valor": 21,
+   "perda": 0,
+   "custoUnit": 0.05526316
+  },
+  {
+   "nome": "Leite Ninho Sachê 750g",
+   "unidade": "Gramas",
+   "quantidade": 750,
+   "valor": 37,
+   "perda": 0,
+   "custoUnit": 0.04933333
+  },
+  {
+   "nome": "Limão",
+   "unidade": "Gramas",
+   "quantidade": 55,
+   "valor": 5,
+   "perda": 0,
+   "custoUnit": 0.09090909
+  },
+  {
+   "nome": "Manteiga (com sal) natville",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 19.5,
+   "perda": 0,
+   "custoUnit": 0.039
+  },
+  {
+   "nome": "Manteiga de amendoim",
+   "unidade": "Gramas",
+   "quantidade": null,
+   "valor": 0,
+   "perda": 0,
+   "custoUnit": 0
+  },
+  {
+   "nome": "Maracujá",
+   "unidade": "Gramas",
+   "quantidade": 158,
+   "valor": 15,
+   "perda": 0,
+   "custoUnit": 0.09493671
+  },
+  {
+   "nome": "Milho verde",
+   "unidade": "Gramas",
+   "quantidade": 170,
+   "valor": 3.45,
+   "perda": 0,
+   "custoUnit": 0.02029412
+  },
+  {
+   "nome": "Mini Oreo",
+   "unidade": "Gramas",
+   "quantidade": 20,
+   "valor": 2.5,
+   "perda": 0,
+   "custoUnit": 0.125
+  },
+  {
+   "nome": "Nesquik",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 10.79,
+   "perda": 0,
+   "custoUnit": 0.05395
+  },
+  {
+   "nome": "Nutella",
+   "unidade": "Gramas",
+   "quantidade": 650,
+   "valor": 50,
+   "perda": 0,
+   "custoUnit": 0.07692308
+  },
+  {
+   "nome": "ovo bdj",
+   "unidade": "Unidade",
+   "quantidade": 30,
+   "valor": 22,
+   "perda": 0,
+   "custoUnit": 0.73333333
+  },
+  {
+   "nome": "Ovomaltine",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 24,
+   "perda": 0,
+   "custoUnit": 0.048
+  },
+  {
+   "nome": "Paçoca farinha",
+   "unidade": "Gramas",
+   "quantidade": 300,
+   "valor": 5,
+   "perda": 0,
+   "custoUnit": 0.01666667
+  },
+  {
+   "nome": "Paçoca vasilha",
+   "unidade": "Unidade",
+   "quantidade": 50,
+   "valor": 17,
+   "perda": 0,
+   "custoUnit": 0.34
+  },
+  {
+   "nome": "Pasta saborizante Pistache",
+   "unidade": "Gramas",
+   "quantidade": 90,
+   "valor": 30.99,
+   "perda": 0,
+   "custoUnit": 0.34433333
+  },
+  {
+   "nome": "pct brownie finna",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 6.2,
+   "perda": 0,
+   "custoUnit": 6.2
+  },
+  {
+   "nome": "Pestisqueira G",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 2.5,
+   "perda": 0,
+   "custoUnit": 2.5
+  },
+  {
+   "nome": "Pestisqueira P",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 1.65,
+   "perda": 0,
+   "custoUnit": 1.65
+  },
+  {
+   "nome": "Pimenta Dedo de Moça",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 5,
+   "perda": 0,
+   "custoUnit": 0.05
+  },
+  {
+   "nome": "Pó p decoração",
+   "unidade": "Gramas",
+   "quantidade": 5,
+   "valor": 11.9,
+   "perda": 0,
+   "custoUnit": 2.38
+  },
+  {
+   "nome": "Queijo Ralado Parmesão Faixa Azul",
+   "unidade": "Gramas",
+   "quantidade": 50,
+   "valor": 7.45,
+   "perda": 0,
+   "custoUnit": 0.149
+  },
+  {
+   "nome": "Queijo Ralado Parmesão Vigor",
+   "unidade": "Gramas",
+   "quantidade": 50,
+   "valor": 6.35,
+   "perda": 0,
+   "custoUnit": 0.127
+  },
+  {
+   "nome": "Recibo",
+   "unidade": "Unidade",
+   "quantidade": 50,
+   "valor": 1.5,
+   "perda": 0,
+   "custoUnit": 0.03
+  },
+  {
+   "nome": "Uva",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 12,
+   "perda": 0,
+   "custoUnit": 0.024
+  },
+  {
+   "nome": "Vermicelli Melken Branco",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 36,
+   "perda": 0,
+   "custoUnit": 0.09
+  },
+  {
+   "nome": "Vinagre de álcool",
+   "unidade": "ml",
+   "quantidade": 500,
+   "valor": 1.8,
+   "perda": 0,
+   "custoUnit": 0.0036
+  },
+  {
+   "nome": "Waffer",
+   "unidade": "Gramas",
+   "quantidade": 80,
+   "valor": 1.85,
+   "perda": 0,
+   "custoUnit": 0.023125
+  },
+  {
+   "nome": "Xerém de amendoim",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 10,
+   "perda": 0,
+   "custoUnit": 0.02
+  },
+  {
+   "nome": "Xerém de castanha",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 50,
+   "perda": 0,
+   "custoUnit": 0.05
+  },
+  {
+   "nome": "Biscoito Oreo",
+   "unidade": "Gramas",
+   "quantidade": 90,
+   "valor": 2,
+   "perda": 0,
+   "custoUnit": 0.02222222
+  },
+  {
+   "nome": "Geleia pimenta vermelha quensbrrry",
+   "unidade": "Gramas",
+   "quantidade": 320,
+   "valor": 19,
+   "perda": 0,
+   "custoUnit": 0.059375
+  },
+  {
+   "nome": "Pimenta calabresa",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 4,
+   "perda": 0,
+   "custoUnit": 0.04
+  },
+  {
+   "nome": "Corante",
+   "unidade": "Gramas",
+   "quantidade": null,
+   "valor": 0,
+   "perda": 0,
+   "custoUnit": 0
+  },
+  {
+   "nome": "Pistache cru e sem sal",
+   "unidade": "Gramas",
+   "quantidade": 100,
+   "valor": 18,
+   "perda": 0,
+   "custoUnit": 0.18
+  },
+  {
+   "nome": "Embalagem para 100",
+   "unidade": "Unidade",
+   "quantidade": 1,
+   "valor": 3.75,
+   "perda": 0,
+   "custoUnit": 3.75
+  },
+  {
+   "nome": "Achocolatado Nescau",
+   "unidade": "Gramas",
+   "quantidade": 200,
+   "valor": 7.5,
+   "perda": 0,
+   "custoUnit": 0.0375
+  },
+  {
+   "nome": "Massa de bolo Maratá",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 6,
+   "perda": 0,
+   "custoUnit": 0.015
+  },
+  {
+   "nome": "Massa de brownie Finna",
+   "unidade": "Gramas",
+   "quantidade": 400,
+   "valor": 7,
+   "perda": 0,
+   "custoUnit": 0.0175
+  },
+  {
+   "nome": "Margarina Primor",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 7,
+   "perda": 0,
+   "custoUnit": 0.014
+  },
+  {
+   "nome": "Chocolate em Pó 30% Melken",
+   "unidade": "Gramas",
+   "quantidade": 1000,
+   "valor": 63,
+   "perda": 0,
+   "custoUnit": 0.063
+  },
+  {
+   "nome": "ChocoBall Power Mini",
+   "unidade": "Gramas",
+   "quantidade": 500,
+   "valor": 23,
+   "perda": 0,
+   "custoUnit": 0.046
+  }
+ ],
+ "receitas": [
+  {
+   "nome": "Massa base de brigadeiro tradicional",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 6
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 9
+    },
+    {
+     "item": "Chocolate blend sicao",
+     "unidade": "Gramas",
+     "quantidade": 30
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa base de Nesquik",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Nesquik",
+     "unidade": "Gramas",
+     "quantidade": 38
+    },
+    {
+     "item": "Leite condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Brownie de chocolate",
+   "perdaCoccao": 0,
+   "itens": [
+    {
+     "item": "ovo bdj",
+     "unidade": "Unidade",
+     "quantidade": 3
+    },
+    {
+     "item": "Chocolate blend sicao",
+     "unidade": "Gramas",
+     "quantidade": 50
+    },
+    {
+     "item": "Manteiga (com sal) natville",
+     "unidade": "Gramas",
+     "quantidade": 100
+    },
+    {
+     "item": "pct brownie finna",
+     "unidade": "Unidade",
+     "quantidade": 1
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa base de Brigadeiro Branco",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa base de brigadeiro de Ninho",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 36
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa branca",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Pudim",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 50
+    },
+    {
+     "item": "ovo bdj",
+     "unidade": "Unidade",
+     "quantidade": 2
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Calda Caramelo",
+   "perdaCoccao": 0.77,
+   "itens": [
+    {
+     "item": "Açúcar Confeiteiro 1kg",
+     "unidade": "Gramas",
+     "quantidade": 300
+    },
+    {
+     "item": "Vinagre de álcool",
+     "unidade": "ml",
+     "quantidade": 30
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa Brigadeiro Meio Amargo",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 30
+    },
+    {
+     "item": "Chocolate meio amargo sicao",
+     "unidade": "Gramas",
+     "quantidade": 30
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa Brigadeiro de Limão",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Limão",
+     "unidade": "Gramas",
+     "quantidade": 8
+    },
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa Brigadeiro de Café",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 6
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 9
+    },
+    {
+     "item": "Café inst 50g",
+     "unidade": "Gramas",
+     "quantidade": 5
+    },
+    {
+     "item": "Chocolate blend sicao",
+     "unidade": "Gramas",
+     "quantidade": 30
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa Brigadeiro de Cereja",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 20
+    },
+    {
+     "item": "Cereja em calda",
+     "unidade": "Gramas",
+     "quantidade": 48
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa Brigadeiro de Beijinho",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite de côco",
+     "unidade": "Gramas",
+     "quantidade": 20
+    },
+    {
+     "item": "Coco Ralado desidratado",
+     "unidade": "Gramas",
+     "quantidade": 50
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Queijo Parmesão",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Queijo Ralado Parmesão Faixa Azul",
+     "unidade": "Gramas",
+     "quantidade": 25
+    },
+    {
+     "item": "Queijo Ralado Parmesão Vigor",
+     "unidade": "Gramas",
+     "quantidade": 25
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Kit Kat",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 400
+    },
+    {
+     "item": "Creme Kit Kat",
+     "unidade": "Gramas",
+     "quantidade": 100
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 6
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 9
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Ovomaltine",
+   "perdaCoccao": 0.35,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 400
+    },
+    {
+     "item": "Ovomaltine",
+     "unidade": "Gramas",
+     "quantidade": 100
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 12
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 27
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 18
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Churros",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Doce de leite triangulo",
+     "unidade": "Gramas",
+     "quantidade": 50
+    },
+    {
+     "item": "Canela",
+     "unidade": "Gramas",
+     "quantidade": 3
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Oreo",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Biscoito Oreo",
+     "unidade": "Gramas",
+     "quantidade": 91
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Paçoca",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    },
+    {
+     "item": "Paçoca farinha",
+     "unidade": "Gramas",
+     "quantidade": 75
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro Red Velvet",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 12
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 18
+    },
+    {
+     "item": "Essência de baunilha",
+     "unidade": "Gramas",
+     "quantidade": 1
+    },
+    {
+     "item": "corante em pó",
+     "unidade": "Gramas",
+     "quantidade": 0.01
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Canjica",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Milho verde",
+     "unidade": "Gramas",
+     "quantidade": 230
+    },
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 36
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Alpino",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Chocolate Alpino",
+     "unidade": "Gramas",
+     "quantidade": 90
+    },
+    {
+     "item": "Chocolate em Pó Alpino",
+     "unidade": "Gramas",
+     "quantidade": 38
+    },
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 400
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Maracujá",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Maracujá",
+     "unidade": "Gramas",
+     "quantidade": 8
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Capuccino - Baunilha",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "capuccino baunilha 3 coracoes",
+     "unidade": "Gramas",
+     "quantidade": 30
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Capuccino - Tradicional",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    },
+    {
+     "item": "capuccino marata  chocolate",
+     "unidade": "Gramas",
+     "quantidade": 30
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Chocolate Branco",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate branco genuine",
+     "unidade": "Gramas",
+     "quantidade": 90
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Chocolate com Pimenta",
+   "perdaCoccao": 0.4,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 18
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 12
+    },
+    {
+     "item": "Geleia pimenta vermelha quensbrrry",
+     "unidade": "Gramas",
+     "quantidade": 60
+    },
+    {
+     "item": "Pimenta calabresa",
+     "unidade": "Gramas",
+     "quantidade": 8
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Caipirinha",
+   "perdaCoccao": 0,
+   "itens": [
+    {
+     "item": "Brigadeiro base Limão",
+     "unidade": "Gramas",
+     "quantidade": 440
+    },
+    {
+     "item": "Cachaça",
+     "unidade": "Gramas",
+     "quantidade": 20
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Docinho de leite ninho",
+   "perdaCoccao": 0,
+   "itens": [
+    {
+     "item": "Leite em Pó Camponesa",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Açúcar Confeiteiro",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Amido de milho",
+     "unidade": "Gramas",
+     "quantidade": 10
+    },
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 270
+    },
+    {
+     "item": "Dióxido de Titânio",
+     "unidade": "Gramas",
+     "quantidade": 4
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Capuccino de Caramelo Salgado",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Capuccino Caramelo Salgado - 3 Corações",
+     "unidade": "Gramas",
+     "quantidade": 13
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Brigadeiro de Pistache",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Pasta saborizante Pistache",
+     "unidade": "Gramas",
+     "quantidade": 24
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa tradicional",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "achocolatado nescau",
+     "unidade": "Gramas",
+     "quantidade": 18
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Bolo chocolate maratá",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "massa de bolo maratá",
+     "unidade": "Gramas",
+     "quantidade": 400
+    },
+    {
+     "item": "ovo bdj",
+     "unidade": "Unidade",
+     "quantidade": 3
+    },
+    {
+     "item": "Margarina Primor",
+     "unidade": "Gramas",
+     "quantidade": 60
+    },
+    {
+     "item": "Leite em pó",
+     "unidade": "Gramas",
+     "quantidade": 30
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Brownie",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Massa de brownie Finna",
+     "unidade": "Gramas",
+     "quantidade": 400
+    },
+    {
+     "item": "ovo bdj",
+     "unidade": "Unidade",
+     "quantidade": 3
+    },
+    {
+     "item": "Margarina Primor",
+     "unidade": "Gramas",
+     "quantidade": 90
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa de Chocolate ao leite",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Leite Ninho pó - lata",
+     "unidade": "Gramas",
+     "quantidade": 18
+    },
+    {
+     "item": "Chocolate em pó tradicional dr oetcker",
+     "unidade": "Gramas",
+     "quantidade": 36
+    }
+   ],
+   "pesoApos": null
+  },
+  {
+   "nome": "Massa Tradicional 2.0",
+   "perdaCoccao": 0.3,
+   "itens": [
+    {
+     "item": "Leite Condensado",
+     "unidade": "Gramas",
+     "quantidade": 395
+    },
+    {
+     "item": "Creme de leite",
+     "unidade": "Gramas",
+     "quantidade": 200
+    },
+    {
+     "item": "Chocolate em pó melken 50%",
+     "unidade": "Gramas",
+     "quantidade": 8
+    },
+    {
+     "item": "Chocolate em Pó 30% Melken",
+     "unidade": "Gramas",
+     "quantidade": 20
+    }
+   ],
+   "pesoApos": null
+  }
+ ],
+ "produtos": [
+  {
+   "linha": "Ovos",
+   "nome": "ovo de Páscoa uva 50g",
+   "custoUnit": 1.445906,
+   "custoIndireto": 1.766717,
+   "markup": 2.85,
+   "avulso": 5.236549,
+   "avulsoSemCartao": 5.035143,
+   "festas": 4.189239,
+   "revenda": 3.127712,
+   "delivery": 6.18434
+  },
+  {
+   "linha": "Caixinhas",
+   "nome": "Caixinha de brigs",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Ovos",
+   "nome": "ovo de Páscoa ninho com nutella 50g",
+   "custoUnit": 1.976177,
+   "custoIndireto": 2.414641,
+   "markup": 2.85,
+   "avulso": 7.156995,
+   "avulsoSemCartao": 6.881726,
+   "festas": 5.725596,
+   "revenda": 4.274766,
+   "delivery": 8.452379
+  },
+  {
+   "linha": "Caixinhas",
+   "nome": "Caixinha p-650",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Caixinhas",
+   "nome": "Caixinha p-650",
+   "custoUnit": 1.214886,
+   "custoIndireto": 1.484439,
+   "markup": 2.85,
+   "avulso": 4.399877,
+   "avulsoSemCartao": 4.230651,
+   "festas": 3.519901,
+   "revenda": 2.627981,
+   "delivery": 5.196234
+  },
+  {
+   "linha": "Bolo no pote",
+   "nome": "Sensação",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Ovos",
+   "nome": "ovo de Páscoa ninho com nutela 150g",
+   "custoUnit": 8.862076,
+   "custoIndireto": 10.82835,
+   "markup": 2.85,
+   "avulso": 32.095228,
+   "avulsoSemCartao": 30.860796,
+   "festas": 25.676183,
+   "revenda": 19.170001,
+   "delivery": 37.904319
+  },
+  {
+   "linha": "Ovos",
+   "nome": "ovo de Páscoa Ferrero",
+   "custoUnit": 1.961496,
+   "custoIndireto": 2.396702,
+   "markup": 2.85,
+   "avulso": 7.103826,
+   "avulsoSemCartao": 6.830602,
+   "festas": 5.683061,
+   "revenda": 4.243009,
+   "delivery": 8.389586
+  },
+  {
+   "linha": "Ovos",
+   "nome": "ovo de Páscoa casadinho",
+   "custoUnit": 1.363926,
+   "custoIndireto": 1.666547,
+   "markup": 2.85,
+   "avulso": 4.939646,
+   "avulsoSemCartao": 4.74966,
+   "festas": 3.951717,
+   "revenda": 2.950377,
+   "delivery": 5.8337
+  },
+  {
+   "linha": "Ovos",
+   "nome": "ovo de Páscoa Caramelo salgado com castanha",
+   "custoUnit": 1.550536,
+   "custoIndireto": 1.894561,
+   "markup": 2.85,
+   "avulso": 5.615478,
+   "avulsoSemCartao": 5.399498,
+   "festas": 4.492383,
+   "revenda": 3.354041,
+   "delivery": 6.631854
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Abacaxi",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Bacon",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Bem Casado",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Bis",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Branco com Kit Kat",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "BrigBrownie",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Brulée",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Camafeu",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Capim Santo",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Cerveja",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Champagne",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocoball",
+   "custoUnit": 0.614135,
+   "custoIndireto": 0.750396,
+   "markup": 2.85,
+   "avulso": 2.224174,
+   "avulsoSemCartao": 2.138629,
+   "festas": 1.817834,
+   "revenda": 1.328466,
+   "delivery": 2.626739
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate Branco com Damasco",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate com Laranja",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "ChocoMenta",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Doce de Leite",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Explosão de Ovomaltine",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Guacamole",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Laranja",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Manga",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Morango",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ninho com Limão",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ninho com Maracujá",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ninho com Nesquik",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Nozes com Ameixa",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Palha Italiana",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Palha Italiana",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Sonho de Valsa",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Três Amores",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Vinho",
+   "custoUnit": 0.0,
+   "custoIndireto": 0.0,
+   "markup": 2.85,
+   "avulso": 0.0,
+   "avulsoSemCartao": 0.0,
+   "festas": 0.0,
+   "revenda": 0.0,
+   "delivery": 0.0
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Tradicional tradicional",
+   "custoUnit": 0.415705,
+   "custoIndireto": 0.50794,
+   "markup": 2.85,
+   "avulso": 1.505534,
+   "avulsoSemCartao": 1.447629,
+   "festas": 1.204427,
+   "revenda": 0.899233,
+   "delivery": 1.778029
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Churros",
+   "custoUnit": 0.423908,
+   "custoIndireto": 0.517963,
+   "markup": 2.85,
+   "avulso": 1.535241,
+   "avulsoSemCartao": 1.476194,
+   "festas": 1.254765,
+   "revenda": 0.916977,
+   "delivery": 1.813113
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Paçoca",
+   "custoUnit": 0.42452,
+   "custoIndireto": 0.51871,
+   "markup": 2.85,
+   "avulso": 1.537457,
+   "avulsoSemCartao": 1.478324,
+   "festas": 1.256576,
+   "revenda": 0.9183,
+   "delivery": 1.81573
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Surpresa de Uva",
+   "custoUnit": 0.425205,
+   "custoIndireto": 0.519548,
+   "markup": 2.85,
+   "avulso": 1.539939,
+   "avulsoSemCartao": 1.480711,
+   "festas": 1.258604,
+   "revenda": 0.919783,
+   "delivery": 1.818661
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Docinhos de Ninho",
+   "custoUnit": 0.453844,
+   "custoIndireto": 0.554541,
+   "markup": 2.85,
+   "avulso": 1.64366,
+   "avulsoSemCartao": 1.580442,
+   "festas": 1.343376,
+   "revenda": 0.981733,
+   "delivery": 1.941155
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Limão",
+   "custoUnit": 0.457893,
+   "custoIndireto": 0.559488,
+   "markup": 2.85,
+   "avulso": 1.658322,
+   "avulsoSemCartao": 1.59454,
+   "festas": 1.355359,
+   "revenda": 0.990491,
+   "delivery": 1.95847
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Canjica",
+   "custoUnit": 0.486847,
+   "custoIndireto": 0.594866,
+   "markup": 2.85,
+   "avulso": 1.763184,
+   "avulsoSemCartao": 1.695369,
+   "festas": 1.441064,
+   "revenda": 1.053124,
+   "delivery": 2.082312
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Maracujá",
+   "custoUnit": 0.487545,
+   "custoIndireto": 0.595719,
+   "markup": 2.85,
+   "avulso": 1.765711,
+   "avulsoSemCartao": 1.697799,
+   "festas": 1.443129,
+   "revenda": 1.054633,
+   "delivery": 2.085296
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Capuccino Tradicional",
+   "custoUnit": 0.495527,
+   "custoIndireto": 0.605472,
+   "markup": 2.85,
+   "avulso": 1.794619,
+   "avulsoSemCartao": 1.725595,
+   "festas": 1.466756,
+   "revenda": 1.071899,
+   "delivery": 2.119436
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Brigadeiro Tradicional",
+   "custoUnit": 0.441775,
+   "custoIndireto": 0.539794,
+   "markup": 2.85,
+   "avulso": 1.59995,
+   "avulsoSemCartao": 1.538413,
+   "festas": 1.307651,
+   "revenda": 0.955626,
+   "delivery": 1.889534
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Napolitano",
+   "custoUnit": 0.476722,
+   "custoIndireto": 0.582495,
+   "markup": 2.85,
+   "avulso": 1.726514,
+   "avulsoSemCartao": 1.66011,
+   "festas": 1.411093,
+   "revenda": 1.031221,
+   "delivery": 2.039006
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate com Amendoim",
+   "custoUnit": 0.447562,
+   "custoIndireto": 0.546865,
+   "markup": 2.85,
+   "avulso": 1.620907,
+   "avulsoSemCartao": 1.558564,
+   "festas": 1.324779,
+   "revenda": 0.968143,
+   "delivery": 1.914283
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Charge",
+   "custoUnit": 0.459135,
+   "custoIndireto": 0.561005,
+   "markup": 2.85,
+   "avulso": 1.66282,
+   "avulsoSemCartao": 1.598865,
+   "festas": 1.359036,
+   "revenda": 0.993178,
+   "delivery": 1.963783
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ninho",
+   "custoUnit": 0.505434,
+   "custoIndireto": 0.617578,
+   "markup": 2.85,
+   "avulso": 1.8305,
+   "avulsoSemCartao": 1.760097,
+   "festas": 1.496082,
+   "revenda": 1.093331,
+   "delivery": 2.161813
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Oreo",
+   "custoUnit": 0.505734,
+   "custoIndireto": 0.617944,
+   "markup": 2.85,
+   "avulso": 1.831585,
+   "avulsoSemCartao": 1.761139,
+   "festas": 1.496968,
+   "revenda": 1.093978,
+   "delivery": 2.163093
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Nesquik",
+   "custoUnit": 0.511226,
+   "custoIndireto": 0.624654,
+   "markup": 2.85,
+   "avulso": 1.851474,
+   "avulsoSemCartao": 1.780264,
+   "festas": 1.513224,
+   "revenda": 1.105858,
+   "delivery": 2.186583
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Casadinho",
+   "custoUnit": 0.489492,
+   "custoIndireto": 0.598099,
+   "markup": 2.85,
+   "avulso": 1.772764,
+   "avulsoSemCartao": 1.704581,
+   "festas": 1.448894,
+   "revenda": 1.058845,
+   "delivery": 2.093626
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Sensação",
+   "custoUnit": 0.501584,
+   "custoIndireto": 0.612874,
+   "markup": 2.85,
+   "avulso": 1.816557,
+   "avulsoSemCartao": 1.74669,
+   "festas": 1.484686,
+   "revenda": 1.085002,
+   "delivery": 2.145346
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Capuccino de Baunilha",
+   "custoUnit": 0.527367,
+   "custoIndireto": 0.644377,
+   "markup": 2.85,
+   "avulso": 1.909933,
+   "avulsoSemCartao": 1.836474,
+   "festas": 1.561003,
+   "revenda": 1.140774,
+   "delivery": 2.255622
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate com Maracujá",
+   "custoUnit": 0.486277,
+   "custoIndireto": 0.594169,
+   "markup": 2.85,
+   "avulso": 1.761118,
+   "avulsoSemCartao": 1.693382,
+   "festas": 1.439375,
+   "revenda": 1.051889,
+   "delivery": 2.079872
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "ChocoLima ou Torta de Limão",
+   "custoUnit": 0.486632,
+   "custoIndireto": 0.594603,
+   "markup": 2.85,
+   "avulso": 1.762404,
+   "avulsoSemCartao": 1.69462,
+   "festas": 1.440427,
+   "revenda": 1.052658,
+   "delivery": 2.081392
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "ChocoNinho",
+   "custoUnit": 0.486682,
+   "custoIndireto": 0.594665,
+   "markup": 2.85,
+   "avulso": 1.762587,
+   "avulsoSemCartao": 1.694795,
+   "festas": 1.440576,
+   "revenda": 1.052767,
+   "delivery": 2.081607
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Romeu e Julieta",
+   "custoUnit": 0.531548,
+   "custoIndireto": 0.649485,
+   "markup": 2.85,
+   "avulso": 1.925072,
+   "avulsoSemCartao": 1.851031,
+   "festas": 1.573376,
+   "revenda": 1.149817,
+   "delivery": 2.273502
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Pudim",
+   "custoUnit": 0.535239,
+   "custoIndireto": 0.653995,
+   "markup": 2.85,
+   "avulso": 1.938443,
+   "avulsoSemCartao": 1.863887,
+   "festas": 1.584304,
+   "revenda": 1.157803,
+   "delivery": 2.289292
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Café com Leite",
+   "custoUnit": 0.539819,
+   "custoIndireto": 0.659591,
+   "markup": 2.85,
+   "avulso": 1.955028,
+   "avulsoSemCartao": 1.879835,
+   "festas": 1.597859,
+   "revenda": 1.167709,
+   "delivery": 2.308879
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Pão de Mel",
+   "custoUnit": 0.486995,
+   "custoIndireto": 0.595047,
+   "markup": 2.85,
+   "avulso": 1.763719,
+   "avulsoSemCartao": 1.695884,
+   "festas": 1.441501,
+   "revenda": 1.053443,
+   "delivery": 2.082944
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Capuccino de Caramelo Salgado",
+   "custoUnit": 0.542724,
+   "custoIndireto": 0.663141,
+   "markup": 2.85,
+   "avulso": 1.965549,
+   "avulsoSemCartao": 1.889951,
+   "festas": 1.606458,
+   "revenda": 1.173993,
+   "delivery": 2.321305
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Beijinho",
+   "custoUnit": 0.546474,
+   "custoIndireto": 0.667723,
+   "markup": 2.85,
+   "avulso": 1.97913,
+   "avulsoSemCartao": 1.903009,
+   "festas": 1.617558,
+   "revenda": 1.182105,
+   "delivery": 2.337343
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ninho com Nutella",
+   "custoUnit": 0.601764,
+   "custoIndireto": 0.735281,
+   "markup": 2.85,
+   "avulso": 2.179372,
+   "avulsoSemCartao": 2.09555,
+   "festas": 1.781217,
+   "revenda": 1.301706,
+   "delivery": 2.573828
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Flocos",
+   "custoUnit": 0.577848,
+   "custoIndireto": 0.706058,
+   "markup": 2.85,
+   "avulso": 2.092756,
+   "avulsoSemCartao": 2.012265,
+   "festas": 1.710425,
+   "revenda": 1.249972,
+   "delivery": 2.471535
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Café",
+   "custoUnit": 0.570634,
+   "custoIndireto": 0.697244,
+   "markup": 2.85,
+   "avulso": 2.06663,
+   "avulsoSemCartao": 1.987144,
+   "festas": 1.689073,
+   "revenda": 1.234367,
+   "delivery": 2.440681
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolatudo",
+   "custoUnit": 0.508629,
+   "custoIndireto": 0.621481,
+   "markup": 2.85,
+   "avulso": 1.842071,
+   "avulsoSemCartao": 1.771222,
+   "festas": 1.505538,
+   "revenda": 1.100241,
+   "delivery": 2.175477
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Confete",
+   "custoUnit": 0.563839,
+   "custoIndireto": 0.688941,
+   "markup": 2.85,
+   "avulso": 2.042021,
+   "avulsoSemCartao": 1.963482,
+   "festas": 1.66896,
+   "revenda": 1.219669,
+   "delivery": 2.411618
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Prestígio",
+   "custoUnit": 0.562924,
+   "custoIndireto": 0.687823,
+   "markup": 2.85,
+   "avulso": 2.038708,
+   "avulsoSemCartao": 1.960296,
+   "festas": 1.666252,
+   "revenda": 1.21769,
+   "delivery": 2.407705
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Alpino",
+   "custoUnit": 0.765184,
+   "custoIndireto": 0.934959,
+   "markup": 2.85,
+   "avulso": 2.771219,
+   "avulsoSemCartao": 2.664633,
+   "festas": 2.264938,
+   "revenda": 1.655208,
+   "delivery": 3.272797
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ovomaltine",
+   "custoUnit": 0.633943,
+   "custoIndireto": 0.774599,
+   "markup": 2.85,
+   "avulso": 2.295912,
+   "avulsoSemCartao": 2.207608,
+   "festas": 1.876467,
+   "revenda": 1.371314,
+   "delivery": 2.711462
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate com Pimenta",
+   "custoUnit": 0.642683,
+   "custoIndireto": 0.785278,
+   "markup": 2.85,
+   "avulso": 2.327564,
+   "avulsoSemCartao": 2.238043,
+   "festas": 1.902336,
+   "revenda": 1.390219,
+   "delivery": 2.748843
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Cereja",
+   "custoUnit": 0.672899,
+   "custoIndireto": 0.822198,
+   "markup": 2.85,
+   "avulso": 2.436996,
+   "avulsoSemCartao": 2.343266,
+   "festas": 1.991776,
+   "revenda": 1.455581,
+   "delivery": 2.878081
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate com Castanha",
+   "custoUnit": 0.678518,
+   "custoIndireto": 0.829064,
+   "markup": 2.85,
+   "avulso": 2.457346,
+   "avulsoSemCartao": 2.362832,
+   "festas": 2.008408,
+   "revenda": 1.467736,
+   "delivery": 2.902114
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Meio Amargo",
+   "custoUnit": 0.768516,
+   "custoIndireto": 0.93903,
+   "markup": 2.85,
+   "avulso": 2.783286,
+   "avulsoSemCartao": 2.676236,
+   "festas": 2.274801,
+   "revenda": 1.662415,
+   "delivery": 3.287048
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Red Velvet",
+   "custoUnit": 0.780162,
+   "custoIndireto": 0.95326,
+   "markup": 2.85,
+   "avulso": 2.825464,
+   "avulsoSemCartao": 2.716792,
+   "festas": 2.309273,
+   "revenda": 1.687607,
+   "delivery": 3.33686
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Ferrero Rocher",
+   "custoUnit": 0.806477,
+   "custoIndireto": 0.985414,
+   "markup": 2.85,
+   "avulso": 2.920768,
+   "avulsoSemCartao": 2.80843,
+   "festas": 2.387166,
+   "revenda": 1.744531,
+   "delivery": 3.449413
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Floresta Negra",
+   "custoUnit": 0.753175,
+   "custoIndireto": 0.920285,
+   "markup": 2.85,
+   "avulso": 2.727726,
+   "avulsoSemCartao": 2.622813,
+   "festas": 2.229391,
+   "revenda": 1.62923,
+   "delivery": 3.221432
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate ao Leite",
+   "custoUnit": 0.863854,
+   "custoIndireto": 1.055521,
+   "markup": 2.85,
+   "avulso": 3.128565,
+   "avulsoSemCartao": 3.008235,
+   "festas": 2.502852,
+   "revenda": 1.868645,
+   "delivery": 3.694821
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Kit Kat",
+   "custoUnit": 0.829021,
+   "custoIndireto": 1.01296,
+   "markup": 2.85,
+   "avulso": 3.002414,
+   "avulsoSemCartao": 2.886937,
+   "festas": 2.453896,
+   "revenda": 1.793297,
+   "delivery": 3.545837
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Chocolate Branco",
+   "custoUnit": 0.95383,
+   "custoIndireto": 1.165461,
+   "markup": 2.85,
+   "avulso": 3.454427,
+   "avulsoSemCartao": 3.321564,
+   "festas": 2.823329,
+   "revenda": 2.063277,
+   "delivery": 4.079662
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Pistache",
+   "custoUnit": 1.081882,
+   "custoIndireto": 1.321925,
+   "markup": 2.85,
+   "avulso": 3.918185,
+   "avulsoSemCartao": 3.767485,
+   "festas": 3.202362,
+   "revenda": 2.340273,
+   "delivery": 4.627358
+  },
+  {
+   "linha": "Brigadeiros",
+   "nome": "Floresta Negra - Recheado",
+   "custoUnit": 1.099629,
+   "custoIndireto": 1.343609,
+   "markup": 2.85,
+   "avulso": 3.982458,
+   "avulsoSemCartao": 3.829287,
+   "festas": 3.254894,
+   "revenda": 2.378663,
+   "delivery": 4.703265
+  },
+  {
+   "linha": "Bolo no pote",
+   "nome": "Bolo no pote - Chocolatudo",
+   "custoUnit": 3.295288,
+   "custoIndireto": 4.02643,
+   "markup": 2.85,
+   "avulso": 11.93434,
+   "avulsoSemCartao": 11.475327,
+   "festas": 9.547472,
+   "revenda": 7.128203,
+   "delivery": 14.094401
+  },
+  {
+   "linha": "Bolo no pote",
+   "nome": "Bolo no pote - ChocoNinho",
+   "custoUnit": 3.035966,
+   "custoIndireto": 3.709571,
+   "markup": 2.85,
+   "avulso": 10.995168,
+   "avulsoSemCartao": 10.572277,
+   "festas": 8.796135,
+   "revenda": 6.56725,
+   "delivery": 12.985244
+  },
+  {
+   "linha": "Bolo no pote",
+   "nome": "Bolo no pote - ChocoMaltine",
+   "custoUnit": 3.653884,
+   "custoIndireto": 4.464589,
+   "markup": 2.85,
+   "avulso": 13.233042,
+   "avulsoSemCartao": 12.724079,
+   "festas": 10.586433,
+   "revenda": 7.903898,
+   "delivery": 15.628162
+  },
+  {
+   "linha": "Brownies",
+   "nome": "Brownie recheado com Ninho",
+   "custoUnit": 2.085618,
+   "custoIndireto": 2.548365,
+   "markup": 2.85,
+   "avulso": 7.553352,
+   "avulsoSemCartao": 7.262839,
+   "festas": 6.042682,
+   "revenda": 4.511505,
+   "delivery": 8.920475
+  },
+  {
+   "linha": "Brownies",
+   "nome": "Brownie recheado com chocolate",
+   "custoUnit": 2.247695,
+   "custoIndireto": 2.746402,
+   "markup": 2.85,
+   "avulso": 8.140335,
+   "avulsoSemCartao": 7.827245,
+   "festas": 6.512268,
+   "revenda": 4.8621,
+   "delivery": 9.613698
+  },
+  {
+   "linha": "Brownies",
+   "nome": "Brownie recheado com Ovomaltine",
+   "custoUnit": 2.471817,
+   "custoIndireto": 3.020251,
+   "markup": 2.85,
+   "avulso": 8.952023,
+   "avulsoSemCartao": 8.607715,
+   "festas": 7.161619,
+   "revenda": 5.34691,
+   "delivery": 10.572299
+  },
+  {
+   "linha": "Trufa",
+   "nome": "Trufa de Chocolate com ovomaltine",
+   "custoUnit": 1.584383,
+   "custoIndireto": 1.935918,
+   "markup": 2.85,
+   "avulso": 5.738062,
+   "avulsoSemCartao": 5.517367,
+   "festas": 4.590449,
+   "revenda": 3.427258,
+   "delivery": 6.776625
+  },
+  {
+   "linha": "Trufa",
+   "nome": "Trufa de Chocolate Branco com Limão",
+   "custoUnit": 1.368856,
+   "custoIndireto": 1.672571,
+   "markup": 2.85,
+   "avulso": 4.9575,
+   "avulsoSemCartao": 4.766827,
+   "festas": 3.966,
+   "revenda": 2.961041,
+   "delivery": 5.854785
+  }
+ ],
+ "pcento": [
+  {
+   "sabor": "Camafeu",
+   "acrescimo": 8,
+   "valorAntigo": 150,
+   "precoCento": 155
+  },
+  {
+   "sabor": "Bis",
+   "acrescimo": 8,
+   "valorAntigo": 180,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Bem Casado",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Explosão de Ovomaltine",
+   "acrescimo": 8,
+   "valorAntigo": 180,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Branco com Kit Kat",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Guacamole",
+   "acrescimo": 8,
+   "valorAntigo": 180,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Laranja",
+   "acrescimo": 8,
+   "valorAntigo": 180,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Manga",
+   "acrescimo": 8,
+   "valorAntigo": 180,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Brulée",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Ninho com Limão",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Capim Santo",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Sonho de Valsa",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 170
+  },
+  {
+   "sabor": "BrigBrownie",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "ChocoMenta",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Nozes com Ameixa",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 245
+  },
+  {
+   "sabor": "Chocolate com Laranja",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Ninho com Maracujá",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Doce de Leite",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Vinho",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Bacon",
+   "acrescimo": 8,
+   "valorAntigo": 220,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Palha Italiana",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Morango",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 225
+  },
+  {
+   "sabor": "Ninho com Nesquik",
+   "acrescimo": 8,
+   "valorAntigo": 200,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Champagne",
+   "acrescimo": 8,
+   "valorAntigo": 150,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Três Amores",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 225
+  },
+  {
+   "sabor": "Cerveja",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Chocolate Branco com Damasco",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Abacaxi",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Tradicional tradicional",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 170
+  },
+  {
+   "sabor": "Churros",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Paçoca",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Surpresa de Uva",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Brigadeiro Tradicional",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Chocolate com Amendoim",
+   "acrescimo": 8.0,
+   "valorAntigo": 220,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Docinhos de Ninho",
+   "acrescimo": 8.0,
+   "valorAntigo": 200,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Limão",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 150
+  },
+  {
+   "sabor": "Charge",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Napolitano",
+   "acrescimo": 8.0,
+   "valorAntigo": 220,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Chocolate com Maracujá",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "ChocoLima ou Torta de Limão",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 165
+  },
+  {
+   "sabor": "ChocoNinho",
+   "acrescimo": 8.0,
+   "valorAntigo": 200,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Canjica",
+   "acrescimo": 8.0,
+   "valorAntigo": 220,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Pão de Mel",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Maracujá",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Casadinho",
+   "acrescimo": 8.0,
+   "valorAntigo": 200,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Capuccino Tradicional",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Sensação",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Ninho",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Oreo",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Chocolatudo",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Nesquik",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 165
+  },
+  {
+   "sabor": "Capuccino de Baunilha",
+   "acrescimo": 8.0,
+   "valorAntigo": 150,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Romeu e Julieta",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Pudim",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Café com Leite",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Capuccino de Caramelo Salgado",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Beijinho",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Prestígio",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Confete",
+   "acrescimo": 8.0,
+   "valorAntigo": 150,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Café",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Flocos",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Ninho com Nutella",
+   "acrescimo": 8.0,
+   "valorAntigo": 200,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Chocoball",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 190
+  },
+  {
+   "sabor": "Ovomaltine",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 215
+  },
+  {
+   "sabor": "Chocolate com Pimenta",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 215
+  },
+  {
+   "sabor": "Cereja",
+   "acrescimo": 8.0,
+   "valorAntigo": 200,
+   "precoCento": 215
+  },
+  {
+   "sabor": "Chocolate com Castanha",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 215
+  },
+  {
+   "sabor": "Floresta Negra",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 245
+  },
+  {
+   "sabor": "Alpino",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 245
+  },
+  {
+   "sabor": "Meio Amargo",
+   "acrescimo": 8.0,
+   "valorAntigo": 220,
+   "precoCento": 245
+  },
+  {
+   "sabor": "Red Velvet",
+   "acrescimo": 8.0,
+   "valorAntigo": 200,
+   "precoCento": 260
+  },
+  {
+   "sabor": "Ferrero Rocher",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 260
+  },
+  {
+   "sabor": "Kit Kat",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 260
+  },
+  {
+   "sabor": "Chocolate ao Leite",
+   "acrescimo": 8.0,
+   "valorAntigo": 180,
+   "precoCento": 260
+  },
+  {
+   "sabor": "Chocolate Branco",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 340
+  },
+  {
+   "sabor": "Pistache",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 340
+  },
+  {
+   "sabor": "Floresta Negra - Recheado",
+   "acrescimo": 8.0,
+   "valorAntigo": 0,
+   "precoCento": 340
+  },
+  {
+   "sabor": "Trufa de Chocolate Branco com Limão",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Trufa de Chocolate com ovomaltine",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Brownie recheado com Ninho",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Brownie recheado com chocolate",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Brownie recheado com Ovomaltine",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Bolo no pote - ChocoNinho",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Bolo no pote - Chocolatudo",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  },
+  {
+   "sabor": "Bolo no pote - ChocoMaltine",
+   "acrescimo": 8,
+   "valorAntigo": 0,
+   "precoCento": 0
+  }
+ ],
+ "despesas": [
+  {
+   "nome": "EXEMPLO água 50%",
+   "valor": 40.0
+  },
+  {
+   "nome": "EXEMPLO contabilidade",
+   "valor": 550.0
+  },
+  {
+   "nome": "Fundo de investimento",
+   "valor": 2000.0
+  },
+  {
+   "nome": "EXEMPLO Pro labore",
+   "valor": 2000.0
+  },
+  {
+   "nome": "EXEMPLO aluguel 50%",
+   "valor": 1800.0
+  },
+  {
+   "nome": "EXEMPLO inss",
+   "valor": 180.0
+  },
+  {
+   "nome": "EXEMPLO DAS - MEI",
+   "valor": 60.0
+  },
+  {
+   "nome": "EXEMPLO luz 50%",
+   "valor": 250.0
+  },
+  {
+   "nome": "EXEMPLO Internet/Fone 50%",
+   "valor": 60.0
+  },
+  {
+   "nome": "EXEMPLO Gás 80%",
+   "valor": 240.0
+  }
+ ],
+ "estoque": [
+  {
+   "local": "A",
+   "item": "Plastico filme tudo grande - muito"
+  },
+  {
+   "local": "A",
+   "item": "Plastico filme tudo grande - quase acabando"
+  },
+  {
+   "local": "A",
+   "item": "Plastico filme tudo menor - quase acabando"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Capim limão - fechado"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Biscoito maizena - 1 fileira - fechado"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Chocolate po 30% melken - 650g"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Leite em po camponesa - 110g"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Leite em po italac - 115g"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Nesquik - 85g (lata 47g valid 01/05/027"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Açúcar refinado uniao 1kg fechado valid 23/12/026"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Leite em po ninho 129g (lata 74g) valid 01/04/027"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Chocolate po 50% melken 68g"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Eritrito 410g"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Coloreti 630g"
+  },
+  {
+   "local": "A.1.1",
+   "item": "Granulado aberto"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Ejetores"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Páscoa grande branco 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Páscoa roxo 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Natal bluestar 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Flores grandes branco 3"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Flores normais branco 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Flores normais bluestar 4 + 1base"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Números"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Maçã 1"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Sao João 3"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Halloween 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "1 ejetor círculo bluestar (provavel parabéns)"
+  },
+  {
+   "local": "A.1.2",
+   "item": "1base rosa"
+  },
+  {
+   "local": "A.1.2",
+   "item": "1base amarelo"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Ejetores coração 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Ejetores ursinho 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "1 base amarela"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Ejetores flor 4"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Páscoa"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Barbie"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Doces"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Aniversário"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Flocos natal"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Flor branca"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Letras branca"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Coração branco"
+  },
+  {
+   "local": "A.1.2",
+   "item": "Coração amarelo"
+  },
+  {
+   "local": "A.1.2",
+   "item": "1 base"
+  },
+  {
+   "local": "A.1.3",
+   "item": "1 caixa chocolate tradicional dr oetker 200g valid 10/026"
+  },
+  {
+   "local": "A.1.3",
+   "item": "Po sorvete ceu azul 200g"
+  },
+  {
+   "local": "A.1.3",
+   "item": "Coloreti mini 240gvalid 09/026"
+  },
+  {
+   "local": "A.1.3",
+   "item": "Castanha 300g 27/10/026"
+  },
+  {
+   "local": "A.1.3",
+   "item": "Amendoim torrado 300g valid 27/10/026"
+  },
+  {
+   "local": "A.2.1",
+   "item": "1 pct mini oreo 35g fechado vld 26/01/027"
+  },
+  {
+   "local": "A.2.1",
+   "item": "2 pct oreo 90g fechado vld 25/12/026"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Fitas douradss pequenas"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Embalagens unidade g641"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Limpador dos bicos"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Touca usada"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Injeção silicone para cobertura"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Mini oreo aberto 30g"
+  },
+  {
+   "local": "A.2.1",
+   "item": "1 saco conf usado"
+  },
+  {
+   "local": "A.2.1",
+   "item": "6 adesivos mimo"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Sacos pequenos"
+  },
+  {
+   "local": "A.2.1",
+   "item": "Laço pronto lilás pct"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Pote quadrado com tampa 350ml G378"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Pote retangular com tampa 250ml pp total plast kpr250"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Pote redondo com tampa 250ml pp kp250"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Pote bowl com tampa 500ml prafesta"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Sacolas transparente grandes"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Sacolas brancas pequenas"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Sacolas brancas médias"
+  },
+  {
+   "local": "A.2.2",
+   "item": "Sacos cone pequeno transparente"
+  },
+  {
+   "local": "A.2.3",
+   "item": "1 boleador"
+  },
+  {
+   "local": "A.2.3",
+   "item": "Crepom rosa 2"
+  },
+  {
+   "local": "A.2.3",
+   "item": "Papel seda vermelho 1"
+  },
+  {
+   "local": "A.2.3",
+   "item": "4adesivos mimo"
+  },
+  {
+   "local": "A.2.3",
+   "item": "Laços prontos rosa vermelho roxo dourado szul furta cor"
+  },
+  {
+   "local": "A.2.3",
+   "item": "Toucas novas"
+  },
+  {
+   "local": "A.2.3",
+   "item": "1 caixa fechada luvas vinil sem po M"
+  },
+  {
+   "local": "B",
+   "item": "Balança"
+  },
+  {
+   "local": "B",
+   "item": "CO2 Pacote de colherzinha"
+  },
+  {
+   "local": "B",
+   "item": "CO1 bicos"
+  },
+  {
+   "local": "B",
+   "item": "Colheres medidoras pretas"
+  },
+  {
+   "local": "B",
+   "item": "CO2 roscas normal e 1 borboleta"
+  },
+  {
+   "local": "B",
+   "item": "CO2 rodinhas (eram dos armários) 8"
+  },
+  {
+   "local": "B",
+   "item": "CO2 algo q nao sei o q é 4"
+  },
+  {
+   "local": "B",
+   "item": "CO2 cortadores folhas, flores e outros rosa"
+  },
+  {
+   "local": "B",
+   "item": "CO2 cortadores bichinhos e outros"
+  },
+  {
+   "local": "B",
+   "item": "CO2 cortadores natal"
+  },
+  {
+   "local": "B",
+   "item": "CO2 moldes silicone diversos 7"
+  },
+  {
+   "local": "B",
+   "item": "CO2 separadores bombons bwb"
+  },
+  {
+   "local": "B",
+   "item": "CO2 cortadores pequenos amarelos natal coração estrela reguas"
+  },
+  {
+   "local": "B",
+   "item": "CO2 fechadores de embalagens 3"
+  },
+  {
+   "local": "B",
+   "item": "CO2 molde flores silicone"
+  },
+  {
+   "local": "B",
+   "item": "CO2 cabinhos brancos de confeitar"
+  },
+  {
+   "local": "B",
+   "item": "CO2 1 colher dourada"
+  },
+  {
+   "local": "B",
+   "item": "CO2 1 pct laço pronto branco"
+  },
+  {
+   "local": "B",
+   "item": "CO2 limpar os bicos ferrinho"
+  },
+  {
+   "local": "B",
+   "item": "CO2 1 tampa de injeção"
+  },
+  {
+   "local": "B",
+   "item": "CO2 palheta violão"
+  },
+  {
+   "local": "B",
+   "item": "CO2 pinça"
+  },
+  {
+   "local": "B",
+   "item": "CO2 tampas de lata de refri"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos amor"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos aniversário"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos baby shark"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos batizado"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos batman"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos café"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos carinhas emoji"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos casamento"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos ceu"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos cha de bebe vazio"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos circo"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos dc"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos dia das maes"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos dia dos pais"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos disney"
+  },
+  {
+   "local": "B",
+   "item": "GO1 carimbos cabos"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos espaço"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos fazenda 1"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos fazenda 2"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos flork 1 médios rosa"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos flork 2 médios brancos"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos flork 3 pequenos"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos flork 4 grandes roxos"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos frutas"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos fundos do mar"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos futebol"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos gato e cachorro"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos Halloween"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos jovens titãs"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos letras mini 1"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos letras mini 2"
+  },
+  {
+   "local": "B",
+   "item": "GO2 carimbos cabos"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos letras grandes A ate N"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos letras grandes O até acentos"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Marvel"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Mini"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Mundo Bita"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Natal"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Números"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Palavras"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Páscoa"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Profissões 1"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Profissões 2"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos Roblox"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos São João"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos +18"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos vazio"
+  },
+  {
+   "local": "B",
+   "item": "GO3 carimbos cabos"
+  },
+  {
+   "local": "B",
+   "item": "GO4 vazios"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V1 Forminhas número 6 branco 2 imp"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V1 Número 6 marrom 4 imp"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V1 Numero 6 amarelo 1"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V1 número 4 laranja 1"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V1 número 0 rosa e cupcake 1"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V2 número 5 flor rosa fucsia 2"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V3 numero 5 rosa 6"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V3 numero 5 goiaba 5"
+  },
+  {
+   "local": "B.1.1",
+   "item": "V3 número 5 vermelho"
+  },
+  {
+   "local": "B.1.1",
+   "item": "Saco pincéis"
+  },
+  {
+   "local": "B.1.2",
+   "item": "V1 forminhas diversas"
+  },
+  {
+   "local": "B.1.2",
+   "item": "V1 tapetes transparente"
+  },
+  {
+   "local": "B.1.2",
+   "item": "Embalagens unidade G641"
+  },
+  {
+   "local": "B.1.2",
+   "item": "Emb hot dog plastico 1"
+  },
+  {
+   "local": "B.1.2",
+   "item": "Vasilha ferrero Rocher"
+  },
+  {
+   "local": "B.1.2",
+   "item": "Colheres pequenas douradas"
+  },
+  {
+   "local": "B.1.2",
+   "item": "Aparelho amassar caixas"
+  },
+  {
+   "local": "B.1.2",
+   "item": "V2 pós para decoração"
+  },
+  {
+   "local": "B.1.3",
+   "item": "1 embalagem grande"
+  },
+  {
+   "local": "B.1.3",
+   "item": "1 pct palitos bambu churrasco"
+  },
+  {
+   "local": "B.1.3",
+   "item": "1 forma de bolo número 10"
+  },
+  {
+   "local": "B.1.3",
+   "item": "Cortadores brownie ovos de Páscoa"
+  },
+  {
+   "local": "B.1.3",
+   "item": "Cortadores brownie quadradas"
+  },
+  {
+   "local": "B.1.3",
+   "item": "Cortadores brownie redondas"
+  },
+  {
+   "local": "B.1.3",
+   "item": "Luvas diversas"
+  },
+  {
+   "local": "B.1.3",
+   "item": "1 cortador de bolo"
+  },
+  {
+   "local": "B.1.3",
+   "item": "1 caixa com notas fiscais"
+  },
+  {
+   "local": "B.1.3",
+   "item": "1 forminha flor lilás n5"
+  },
+  {
+   "local": "B.1.3",
+   "item": "2 forminhas lilás n4"
+  },
+  {
+   "local": "C",
+   "item": "Luva vinil aberta M"
+  },
+  {
+   "local": "C",
+   "item": "12 pct forminha marrom n5 impermeável nobre"
+  },
+  {
+   "local": "C",
+   "item": "Saco confeitar"
+  },
+  {
+   "local": "C",
+   "item": "Adesivos mimo para você"
+  },
+  {
+   "local": "C",
+   "item": "Kit de espatulas panela mexedora"
+  },
+  {
+   "local": "C",
+   "item": "2 tampa lata ninho"
+  },
+  {
+   "local": "C",
+   "item": "Caixa do ring light"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Balanças 2 uso frequente"
+  },
+  {
+   "local": "C.1.1",
+   "item": "V1 forminhas n5 abertas diversas"
+  },
+  {
+   "local": "C.1.1",
+   "item": "V1 bicos de confeitar"
+  },
+  {
+   "local": "C.1.1",
+   "item": "V2 po de cafe"
+  },
+  {
+   "local": "C.1.1",
+   "item": "V3 moldes silicone"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Caixa grampos"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Boleador 1"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Embalagens dpc k641 quadradas dia a dia"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Grampeador"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Termometro alimenticio"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Toucas cabelo"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Ralador pequeno"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Fechador embalagens abertas 2"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Colheres medidoras"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Bloco papel"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Mini mini triturador na caixa"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Bico vermelho"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Embalagem p"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Cafe instantaneo tradicional marata vld 01/08/2026"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Mãozinha iron man"
+  },
+  {
+   "local": "C.1.1",
+   "item": "Piloto quadro preto 1"
+  },
+  {
+   "local": "C.1.2",
+   "item": "PH1 granulado"
+  },
+  {
+   "local": "C.1.2",
+   "item": "PH2 biscoito maizena"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph3 coco ralado adocicado"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph4 leite em po"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph5 castanha trit"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph6 confete coloreti"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph7 chocoball mini"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph8 chocolate pó 50"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph9 granulee melken ver se presta"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph10 amendoim"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Ph11 vazia"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Caixa com forminhas"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Mini oreo fechado vld 26/01/027"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Biscoito oreo 90g vld 25/12/026"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Um pedaço de acetato"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Pistache cru comp em 03/11/2025"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Um negocinho para confeitaria branco"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Laço pronto vermelho"
+  },
+  {
+   "local": "C.1.2",
+   "item": "Caixa com carimbos e bicos mais usados"
+  },
+  {
+   "local": "C.1.3",
+   "item": "Tapete silicone 1"
+  },
+  {
+   "local": "C.1.3",
+   "item": "1 avental callebaut"
+  },
+  {
+   "local": "C.1.3",
+   "item": "1 boleador"
+  },
+  {
+   "local": "C.1.3",
+   "item": "Pedaço de papelão"
+  },
+  {
+   "local": "C.1.3",
+   "item": "Sacolas branca pp"
+  },
+  {
+   "local": "C.1.3",
+   "item": "1 sacola branca p"
+  },
+  {
+   "local": "C.1.3",
+   "item": "Sacolas branca media"
+  },
+  {
+   "local": "C.1.3",
+   "item": "Embalagens kraft diario delivery pqna provisório"
+  },
+  {
+   "local": "C.1.4",
+   "item": "Caixa com caixetas forminhas quadradas varias cores abertas e usada"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G1 pincéis"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G2 corante gel azul royal vld 07/10/026 verde menta vld 22/10/026 2, vermelho natal vld 07/10/026 2,"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G3 lapis e borracha, adesico vld"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G4 vazio"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G5 caixetas pequenas laranja"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G6 palitos de dente 3 cx"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G7 temporizador panela mexedora e luz"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G8 vazia"
+  },
+  {
+   "local": "C.1.5",
+   "item": "G9 vazia"
+  },
+  {
+   "local": "C.2.1",
+   "item": "Embalagens plastico grande kattiane"
+  },
+  {
+   "local": "C.2.2",
+   "item": "Sacolas grandes transparente"
+  },
+  {
+   "local": "C.2.2",
+   "item": "Embalagens quadrada pequena n6 d wilma"
+  },
+  {
+   "local": "C.2.2",
+   "item": "Páscoa papel chumbo"
+  },
+  {
+   "local": "C.2.2",
+   "item": "Páscoa plastico enrolar ovos"
+  },
+  {
+   "local": "C.2.2",
+   "item": "Saco poli transparente 11cm x 19,5cm"
+  },
+  {
+   "local": "C.2.2",
+   "item": "Saco corações"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Colheres douradas, transparentes, pratas, brancas"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Embalagens redonda 140ml com tampa"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Pipeta saborizante"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Garfos transparente"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Guardanapo 1"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Pegador"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Toucas"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Canudos"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Luvas vinl sem po G"
+  },
+  {
+   "local": "C.2.3",
+   "item": "Sacola branca pequena"
+  },
+  {
+   "local": "C.2.4",
+   "item": "Moldes b2w bombons"
+  },
+  {
+   "local": "C.2.4",
+   "item": "Outros mldes"
+  },
+  {
+   "local": "C.2.5",
+   "item": "Plástico caixa de ovo"
+  },
+  {
+   "local": "C.2.5",
+   "item": "Moldes páscoa"
+  },
+  {
+   "local": "D",
+   "item": "Máquina cartão"
+  },
+  {
+   "local": "D",
+   "item": "Triturador pequeno"
+  },
+  {
+   "local": "D",
+   "item": "Fita durex fina forminha n1 azul"
+  },
+  {
+   "local": "D",
+   "item": "Caixa personalizada"
+  },
+  {
+   "local": "C.3.1",
+   "item": "Ejetor pascoa ovo"
+  },
+  {
+   "local": "C.3.1",
+   "item": "Pascoa embalagens"
+  },
+  {
+   "local": "C.3.1",
+   "item": "Fitilho pascoa"
+  },
+  {
+   "local": "C.3.2",
+   "item": "Itens natal"
+  },
+  {
+   "local": "C.3.2",
+   "item": "Embalagens natal"
+  },
+  {
+   "local": "E",
+   "item": "Embalagens cento 35x35"
+  },
+  {
+   "local": "E",
+   "item": "Embalagem 50 35x17"
+  },
+  {
+   "local": "E",
+   "item": "Sacos kraft 12x8x23"
+  },
+  {
+   "local": "F",
+   "item": "Saco forminhas pequena"
+  },
+  {
+   "local": "F",
+   "item": "Saco fitilhos fitas e laços prontos e papel seda brsnco e papel seds vermelho"
+  },
+  {
+   "local": "F",
+   "item": "Plástico bolha"
+  },
+  {
+   "local": "F",
+   "item": "Embalagem grande 1"
+  },
+  {
+   "local": "F",
+   "item": "saco com 2 mini boleiras , colheres medido rss, tampsd de nutella, comedouro enriquecido cachorro"
+  },
+  {
+   "local": "F",
+   "item": "P1 saco 1 embalagens natal e dia das mães"
+  },
+  {
+   "local": "F",
+   "item": "P1 saco2 2 sacos de confeitar, tapete transparente, fita brigadeiro goutmet, tag feliz pascoa, caixa"
+  },
+  {
+   "local": "F",
+   "item": "P1 saco 3 sacolinhas kattiane"
+  },
+  {
+   "local": "F",
+   "item": "P1 saco 4 caixas temáticas variados"
+  },
+  {
+   "local": "F",
+   "item": "P1 saco 5 mostrador acrilico escada, pasta preta, placa pix, touca usada, caneta preta, fita dupla face"
+  },
+  {
+   "local": "F",
+   "item": "P1 saco 6 embalagens dia das mães, namorados, aniversário, pais, tpm alivio"
+  },
+  {
+   "local": "F",
+   "item": "P2 6 latas de ninho 380g vld 01/04/027"
+  },
+  {
+   "local": "F",
+   "item": "P2 1 caixa tradicional chocolate po dr oetker 200g vld 12/2026"
+  },
+  {
+   "local": "F",
+   "item": "P2 sacola com carimbos"
+  },
+  {
+   "local": "F",
+   "item": "P2 adesivos vmd sem telefone , adesivos brigs com contato, adesivos brigs sem contato"
+  },
+  {
+   "local": "F",
+   "item": "P3 caixa com cartões fidelidade"
+  },
+  {
+   "local": "F",
+   "item": "P3 apoiador de celular"
+  },
+  {
+   "local": "F",
+   "item": "P3 saco 1 choc po 50 melken aberto vld 12/2026, coloreti aberto 07/2027, cereal ball aberto 02/027"
+  },
+  {
+   "local": "F",
+   "item": "P3 embalagens 2 brigs"
+  },
+  {
+   "local": "F",
+   "item": "P3 sacos confeitar e nutella vld 01/027"
+  },
+  {
+   "local": "F",
+   "item": "P3 suporte para balão"
+  },
+  {
+   "local": "F",
+   "item": "P4 sacoc1 forma bwb trufa, espatula silicone preta. Embalagens redonda, quadrada, bowl, retangular"
+  }
+ ]
+}
