@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brigadeiraria — Gestão Interna</title>
 <meta name="description" content="Painel interno da brigadeiraria: insumos, fichas técnicas, precificação, orçamentos e estoque.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#3B2418">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brigadeiraria">
+<link rel="apple-touch-icon" href="icone-192.png">
+<link rel="icon" href="icone-192.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
@@ -99,6 +107,7 @@ dialog::backdrop{background:rgba(59,36,24,.45)}
   <span class="sync noprint" id="sync" hidden><b></b><span id="syncTxt"></span></span>
   <span style="flex:1"></span>
   <span class="tag noprint" id="userChip"></span>
+  <button class="btn sec noprint" id="btnInstalar" hidden onclick="instalarApp()">Instalar app</button>
   <button class="btn sec noprint" onclick="salvarAgora()">Salvar agora</button>
   <button class="btn sec noprint" onclick="exportJSON()">Exportar JSON</button>
   <button class="btn sec noprint" onclick="exportXLSX()">Exportar Excel</button>
@@ -145,7 +154,28 @@ const EMAILS_AUTORIZADOS = [
 
 const PASTA='Brigadeiraria App', ARQUIVO='dados.json', PASTA_HIST='Histórico', MAX_VERSOES=50;
 const SCOPES='https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email';
-const VAZIO=()=>({config:{taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0},insumos:[],receitas:[],produtos:[],despesas:[],estoque:[]});
+const VAZIO=()=>({versao:2,config:{taxaDelivery:.305,taxaCartao:.04,custosIndiretos:.15,markupPadrao:2.85,metaMensal:0,
+  fatorTamanho:1.0625,fatorFestas:.8,fatorRevenda:.63462,fatorDelivery:1.25482,acrescimoCento:8},
+  insumos:[],receitas:[],produtos:[],pcento:[],despesas:[],estoque:[]});
+const SECOES=['insumos','receitas','produtos','pcento','despesas','estoque'];
+
+/* ---------- ordenação genérica de tabelas ---------- */
+const ORD={};
+function ordenarPor(tab,k){const o=ORD[tab];ORD[tab]=(o&&o.c===k)?{c:k,a:!o.a}:{c:k,a:true};go(atual);}
+function cabecalho(tab,cols){const o=ORD[tab];
+  return `<tr>${cols.map((c,k)=>`<th class="${c.num?'num':''}" onclick="ordenarPor('${tab}',${k})">${c.t}${o&&o.c===k?(o.a?' ▲':' ▼'):''}</th>`).join('')}</tr>`;}
+function ordenaLinhas(tab,rows){const o=ORD[tab];if(!o)return rows;
+  const s=rows.slice();
+  s.sort((x,y)=>{const A=x[o.c]?.v,B=y[o.c]?.v;
+    let r;
+    if(typeof A==='number'&&typeof B==='number') r=A-B;
+    else r=String(A??'').localeCompare(String(B??''),'pt-BR',{numeric:true,sensitivity:'base'});
+    return o.a?r:-r;});
+  return s;}
+function corpo(tab,rows){return ordenaLinhas(tab,rows).map(r=>`<tr>${r.map(c=>`<td class="${c.num?'num':''}">${c.h!==undefined?c.h:esc(c.v)}</td>`).join('')}</tr>`).join('');}
+function tabela(tab,cols,rows,vazio='Nada encontrado.'){
+  if(!rows.length) return `<p class="muted">${vazio}</p>`;
+  return `<div class="wrap"><table><thead>${cabecalho(tab,cols)}</thead><tbody>${corpo(tab,rows)}</tbody></table></div>`;}
 
 let DB=null, TOKEN=null, USER=null, tokenClient=null;
 let IDS={pasta:null,arquivo:null,hist:null}, REV=null, dirty=false, timerSalvar=null, salvando=false;
@@ -252,7 +282,8 @@ async function boot(){
 }
 function okBoot(origem){
   DB.config=Object.assign(VAZIO().config,DB.config||{});
-  ['insumos','receitas','produtos','despesas','estoque'].forEach(k=>DB[k]=DB[k]||[]);
+  SECOES.forEach(k=>DB[k]=DB[k]||[]);
+  DB.versao=2;
   localStorage.setItem(KEY,JSON.stringify(DB));
   $('#hdrInfo').textContent=origem;
   renderTabs(); go(location.hash.slice(1)||'insumos');
@@ -323,7 +354,7 @@ async function viewHistorico(){
     </div>
   </div>`;
 }
-const contar=d=>['insumos','receitas','produtos','despesas','estoque'].map(k=>[k,(d[k]||[]).length]);
+const contar=d=>SECOES.map(k=>[k,(d[k]||[]).length]);
 async function verVersao(id){
   try{
     const antiga=await lerArquivo(id);
@@ -343,7 +374,7 @@ async function restaurar(id){
     await salvarDrive('antes de restaurar');
     DB=await lerArquivo(id);
     DB.config=Object.assign(VAZIO().config,DB.config||{});
-    ['insumos','receitas','produtos','despesas','estoque'].forEach(k=>DB[k]=DB[k]||[]);
+    SECOES.forEach(k=>DB[k]=DB[k]||[]);
     await salvarDrive('versão restaurada');
     localStorage.setItem(KEY,JSON.stringify(DB));
     toast('Versão restaurada'); viewHistorico();
@@ -372,17 +403,22 @@ function pesoFinal(r){const p=pesoReceita(r);const a=Number(r.pesoApos)||0;retur
 function precoKg(r){const pf=pesoFinal(r);return pf?custoReceita(r)/pf*1000:0;}
 function precificar(p){
   const c=DB.config, base=Number(p.custoUnit)||0;
-  const total=base*(1+(c.custosIndiretos||0));
+  const cart=1+(c.taxaCartao||0);
+  const t16=base*(1+(c.custosIndiretos||0));
+  const total=t16*(c.fatorTamanho||1.0625);      // custo com indiretos — tamanho 18g (17g real)
   const mk=Number(p.markup)||c.markupPadrao||2.85;
-  const avulso=total*mk;
-  return {total, avulso, festas:avulso*0.85, revenda:avulso*0.635,
-          delivery:avulso/(1-(c.taxaDelivery||0))*1.0,
+  const a16=t16*mk*cart;
+  const avulso=total*mk*cart;
+  return {total, semCartao:total*mk, avulso,
+          festas:avulso*(c.fatorFestas||0.8),
+          revenda:a16*(c.fatorRevenda||0.63462),
+          delivery:a16*(c.fatorDelivery||1.25482),
           lucro:avulso-total-(avulso*(c.taxaCartao||0))};
 }
 const despesaTotal=()=>DB.despesas.reduce((s,d)=>s+(Number(d.valor)||0),0);
 
 /* ---------- navegação ---------- */
-const TABS=[['insumos','Insumos'],['receitas','Receitas'],['precificacao','Precificação'],['orcamento','Orçamento'],['estoque','Estoque'],['historico','Histórico'],['config','Configurações']];
+const TABS=[['insumos','Insumos'],['receitas','Receitas'],['precificacao','Precificação'],['pcento','P. Cento'],['orcamento','Orçamento'],['estoque','Estoque'],['historico','Histórico'],['config','Configurações']];
 let atual='insumos';
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-k="${k}" onclick="go('${k}')">${l}</button>`).join('');}
 function go(k){
@@ -390,14 +426,22 @@ function go(k){
   atual=k;location.hash=k;
   document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
   window.scrollTo(0,0);
-  ({insumos:viewInsumos,receitas:viewReceitas,precificacao:viewPrecificacao,orcamento:viewOrcamento,estoque:viewEstoque,historico:viewHistorico,config:viewConfig}[k])();
+  ({insumos:viewInsumos,receitas:viewReceitas,precificacao:viewPrecificacao,pcento:viewPcento,orcamento:viewOrcamento,estoque:viewEstoque,historico:viewHistorico,config:viewConfig}[k])();
 }
 
 /* ---------- INSUMOS ---------- */
-let fIns='',ordIns='nome',ascIns=true;
+let fIns='';
 function viewInsumos(){
-  const lista=DB.insumos.filter(i=>i.nome.toLowerCase().includes(fIns.toLowerCase()))
-    .sort((a,b)=>{const A=ordIns==='nome'?a.nome.toLowerCase():custoInsumo(a),B=ordIns==='nome'?b.nome.toLowerCase():custoInsumo(b);return (A>B?1:A<B?-1:0)*(ascIns?1:-1);});
+  const lista=DB.insumos.filter(i=>i.nome.toLowerCase().includes(fIns.toLowerCase()));
+  const cols=[{t:'Matéria-prima'},{t:'Unidade'},{t:'Qtd. embalagem',num:1},{t:'Valor pago',num:1},{t:'Perda',num:1},{t:'Custo unitário',num:1},{t:''}];
+  const rows=lista.map(i=>{const idx=DB.insumos.indexOf(i);return [
+    {v:i.nome,h:`<strong>${esc(i.nome)}</strong>`},
+    {v:i.unidade||''},
+    {v:Number(i.quantidade)||0,h:i.quantidade??'—',num:1},
+    {v:Number(i.valor)||0,h:BRL(i.valor),num:1},
+    {v:Number(i.perda)||0,h:i.perda?PCT(i.perda):'—',num:1},
+    {v:custoInsumo(i),h:`<strong>${BRL4(custoInsumo(i))}</strong>`,num:1},
+    {v:'',h:`<button class="btn ghost" onclick="editInsumo(${idx})">Editar</button>`,num:1}];});
   $('#view').innerHTML=`
   <div class="card">
     <h2>Insumos</h2><p class="sub">Custo por grama/unidade recalculado a partir do valor pago, da quantidade da embalagem e do fator de perda.</p>
@@ -410,19 +454,7 @@ function viewInsumos(){
       <div class="kpi"><div class="lab">Exibindo</div><div class="val">${lista.length}</div></div>
       <div class="kpi"><div class="lab">Custo médio /g</div><div class="val">${BRL4(DB.insumos.reduce((s,i)=>s+custoInsumo(i),0)/(DB.insumos.length||1))}</div></div>
     </div>
-    <div class="wrap"><table>
-      <thead><tr>
-        <th onclick="ordIns='nome';ascIns=!ascIns;viewInsumos()">Matéria-prima</th>
-        <th>Unidade</th><th class="num">Qtd. embalagem</th><th class="num">Valor pago</th><th class="num">Perda</th>
-        <th class="num" onclick="ordIns='custo';ascIns=!ascIns;viewInsumos()">Custo unitário</th><th></th>
-      </tr></thead><tbody>
-      ${lista.map(i=>{const idx=DB.insumos.indexOf(i);return `<tr>
-        <td><strong>${esc(i.nome)}</strong></td><td>${esc(i.unidade||'')}</td>
-        <td class="num">${i.quantidade??'—'}</td><td class="num">${BRL(i.valor)}</td>
-        <td class="num">${i.perda?PCT(i.perda):'—'}</td>
-        <td class="num"><strong>${BRL4(custoInsumo(i))}</strong></td>
-        <td class="num"><button class="btn ghost" onclick="editInsumo(${idx})">Editar</button></td></tr>`}).join('')}
-      </tbody></table></div>
+    ${tabela('insumos',cols,rows,'Nenhum insumo encontrado.')}
   </div>`;
 }
 function editInsumo(idx){
@@ -454,6 +486,16 @@ function delInsumo(idx){DB.insumos.splice(idx,1);save();closeDlg();viewInsumos()
 let fRec='';
 function viewReceitas(){
   const lista=DB.receitas.filter(r=>r.nome.toLowerCase().includes(fRec.toLowerCase()));
+  const cols=[{t:'Receita'},{t:'Itens',num:1},{t:'Peso cru',num:1},{t:'% perda',num:1},{t:'Peso final',num:1},{t:'Custo',num:1},{t:'Custo/kg',num:1},{t:''}];
+  const rows=lista.map(r=>{const idx=DB.receitas.indexOf(r);return [
+    {v:r.nome,h:`<strong>${esc(r.nome)}</strong>`},
+    {v:(r.itens||[]).length,num:1},
+    {v:pesoReceita(r),h:pesoReceita(r).toFixed(0)+' g',num:1},
+    {v:Number(r.perdaCoccao)||0,h:PCT(r.perdaCoccao||0),num:1},
+    {v:pesoFinal(r),h:pesoFinal(r).toFixed(0)+' g',num:1},
+    {v:custoReceita(r),h:`<strong>${BRL(custoReceita(r))}</strong>`,num:1},
+    {v:precoKg(r),h:BRL(precoKg(r)),num:1},
+    {v:'',h:`<button class="btn ghost" onclick="editReceita(${idx})">Abrir</button>`,num:1}];});
   $('#view').innerHTML=`
   <div class="card">
     <h2>Receitas e fichas técnicas</h2><p class="sub">O custo vem direto dos insumos: mudou o preço de uma matéria-prima, todas as receitas se atualizam.</p>
@@ -462,15 +504,7 @@ function viewReceitas(){
       <button class="btn" onclick="editReceita(-1)">+ Nova receita</button>
       <button class="btn sec" onclick="calcPerda()">Calculadora de perda</button>
     </div>
-    <div class="wrap"><table>
-      <thead><tr><th>Receita</th><th class="num">Itens</th><th class="num">Peso cru</th><th class="num">% perda</th><th class="num">Peso final</th><th class="num">Custo</th><th class="num">Custo/kg</th><th></th></tr></thead>
-      <tbody>${lista.map(r=>{const idx=DB.receitas.indexOf(r);return `<tr>
-        <td><strong>${esc(r.nome)}</strong></td><td class="num">${(r.itens||[]).length}</td>
-        <td class="num">${pesoReceita(r).toFixed(0)} g</td><td class="num">${PCT(r.perdaCoccao||0)}</td>
-        <td class="num">${pesoFinal(r).toFixed(0)} g</td><td class="num"><strong>${BRL(custoReceita(r))}</strong></td>
-        <td class="num">${BRL(precoKg(r))}</td>
-        <td class="num"><button class="btn ghost" onclick="editReceita(${idx})">Abrir</button></td></tr>`}).join('')}
-      </tbody></table></div>
+    ${tabela('receitas',cols,rows,'Nenhuma receita encontrada.')}
   </div>`;
 }
 let rascunho=null, recIdx=-1;
@@ -500,12 +534,18 @@ function linhaItem(it,j){
   return `<div class="row">
     <input list="lst" style="flex:2" value="${esc(it.item)}" placeholder="insumo" oninput="rascunho.itens[${j}].item=this.value;drawTotais()">
     <input type="number" step="any" style="flex:.7" value="${it.quantidade??''}" placeholder="qtd" oninput="rascunho.itens[${j}].quantidade=+this.value;drawTotais()">
+    <span class="muted" id="u${j}" style="width:96px;font-size:12px"></span>
     <span class="muted" id="c${j}" style="width:80px;text-align:right"></span>
     <button class="btn ghost" onclick="rascunho.itens.splice(${j},1);drawReceita(recIdx)">✕</button></div>`;
 }
 function drawTotais(){
   const r=rascunho;if(!r)return;
-  r.itens.forEach((it,j)=>{const el=document.getElementById('c'+j);if(el)el.textContent=BRL(custoItemReceita(it));});
+  r.itens.forEach((it,j)=>{
+    const el=document.getElementById('c'+j);if(el)el.textContent=BRL(custoItemReceita(it));
+    const ins=insumoPorNome(it.item), un=document.getElementById('u'+j);
+    if(ins) it.unidade=ins.unidade||it.unidade;
+    if(un) un.innerHTML=ins?`${esc(ins.unidade||'—')} · <span title="custo por ${esc(ins.unidade||'unidade')}">${BRL4(custoInsumo(ins))}</span>`:'<span style="opacity:.6">—</span>';
+  });
   const t=document.getElementById('totais');if(!t)return;
   t.innerHTML=`<div class="grid g3">
     <div class="kpi"><div class="lab">Custo da receita</div><div class="val">${BRL(custoReceita(r))}</div></div>
@@ -537,9 +577,22 @@ function viewPrecificacao(){
   const lista=DB.produtos.filter(p=>p.nome.toLowerCase().includes(fPro.toLowerCase())&&(!fLinha||p.linha===fLinha));
   const c=DB.config, meta=Number(c.metaMensal)||despesaTotal();
   const margMedia=lista.length?lista.reduce((s,p)=>{const r=precificar(p);return s+(r.avulso?r.lucro/r.avulso:0)},0)/lista.length:0;
+  const cols=[{t:'Produto'},{t:'Linha'},{t:'Custo',num:1},{t:'Custo c/ indiretos',num:1},{t:'Markup',num:1},{t:'Avulso (18g)',num:1},{t:'Festas (cento)',num:1},{t:'Revenda',num:1},{t:'Delivery',num:1},{t:'Margem',num:1},{t:''}];
+  const rows=lista.map(p=>{const idx=DB.produtos.indexOf(p),r=precificar(p),mg=r.avulso?r.lucro/r.avulso:0;return [
+    {v:p.nome,h:`<strong>${esc(p.nome)}</strong>`},
+    {v:p.linha||'',h:`<span class="pill">${esc(p.linha)}</span>`},
+    {v:Number(p.custoUnit)||0,h:BRL(p.custoUnit),num:1},
+    {v:r.total,h:BRL(r.total),num:1},
+    {v:Number(p.markup||c.markupPadrao),h:(p.markup||c.markupPadrao).toFixed(2),num:1},
+    {v:r.avulso,h:`<strong>${BRL(r.avulso)}</strong>`,num:1},
+    {v:r.festas,h:BRL(r.festas),num:1},
+    {v:r.revenda,h:BRL(r.revenda),num:1},
+    {v:r.delivery,h:BRL(r.delivery),num:1},
+    {v:mg,h:`<span class="pill ${mg>=.5?'v':'a'}">${r.avulso?PCT(mg):'—'}</span>`,num:1},
+    {v:'',h:`<button class="btn ghost" onclick="editProduto(${idx})">Editar</button>`,num:1}];});
   $('#view').innerHTML=`
   <div class="card">
-    <h2>Precificação e margem</h2><p class="sub">Preço sugerido = custo + custos indiretos (${PCT(c.custosIndiretos)}) × markup. Taxa de cartão ${PCT(c.taxaCartao)} e delivery ${PCT(c.taxaDelivery)} entram no cálculo.</p>
+    <h2>Precificação e margem</h2><p class="sub">Preços na base <strong>18g (17g real)</strong>: custo + indiretos (${PCT(c.custosIndiretos)}) × fator de tamanho (${(c.fatorTamanho||1.0625).toFixed(4)}) × markup, mais a taxa de cartão de ${PCT(c.taxaCartao)}.</p>
     <div class="grid g3" style="margin-bottom:14px">
       <div class="kpi"><div class="lab">Produtos</div><div class="val">${DB.produtos.length}</div></div>
       <div class="kpi"><div class="lab">Margem média (avulso)</div><div class="val">${PCT(margMedia)}</div></div>
@@ -551,15 +604,7 @@ function viewPrecificacao(){
       <select onchange="fLinha=this.value;viewPrecificacao()"><option value="">Todas as linhas</option>${linhas.map(l=>`<option ${fLinha===l?'selected':''}>${esc(l)}</option>`).join('')}</select>
       <button class="btn" onclick="editProduto(-1)">+ Novo produto</button>
     </div>
-    <div class="wrap"><table>
-      <thead><tr><th>Produto</th><th>Linha</th><th class="num">Custo</th><th class="num">Custo c/ indiretos</th><th class="num">Markup</th><th class="num">Avulso</th><th class="num">Festas (cento)</th><th class="num">Revenda</th><th class="num">Delivery</th><th class="num">Margem</th><th></th></tr></thead>
-      <tbody>${lista.map(p=>{const idx=DB.produtos.indexOf(p),r=precificar(p);return `<tr>
-        <td><strong>${esc(p.nome)}</strong></td><td><span class="pill">${esc(p.linha)}</span></td>
-        <td class="num">${BRL(p.custoUnit)}</td><td class="num">${BRL(r.total)}</td><td class="num">${(p.markup||c.markupPadrao).toFixed(2)}</td>
-        <td class="num"><strong>${BRL(r.avulso)}</strong></td><td class="num">${BRL(r.festas)}</td><td class="num">${BRL(r.revenda)}</td><td class="num">${BRL(r.delivery)}</td>
-        <td class="num"><span class="pill ${r.avulso&&r.lucro/r.avulso>=.5?'v':'a'}">${r.avulso?PCT(r.lucro/r.avulso):'—'}</span></td>
-        <td class="num"><button class="btn ghost" onclick="editProduto(${idx})">Editar</button></td></tr>`}).join('')}
-      </tbody></table></div>
+    ${tabela('precificacao',cols,rows,'Nenhum produto encontrado.')}
   </div>
   <div class="card"><h2>Despesas fixas do mês</h2>
     <p class="sub">Base para a meta e para o ponto de equilíbrio.</p>
@@ -604,6 +649,74 @@ function saveProduto(idx){
   save();closeDlg();viewPrecificacao();toast('Produto salvo');
 }
 
+/* ---------- P. CENTO (precificação comercial dos centos) ---------- */
+let fCen='';
+const produtoPorSabor=s=>DB.produtos.find(p=>p.nome.toLowerCase().trim()===String(s||'').toLowerCase().trim());
+function custoCento(c){
+  const p=produtoPorSabor(c.sabor), auto=p?precificar(p).festas*100:0;
+  return auto>0?auto:(Number(c.custoCento)||0);
+}
+function linhaCento(c){
+  const custo=custoCento(c);
+  const acres=Number(c.acrescimo)??DB.config.acrescimoCento??8;
+  const minimo=custo?custo+(Number.isFinite(acres)?acres:8):0;
+  const preco=Number(c.precoCento)||0;
+  return {custo,minimo,preco,meio:preco/2,
+          desconto:(preco&&minimo)?(preco-minimo)/preco:null,
+          difR:preco-(Number(c.valorAntigo)||0),
+          difP:(Number(c.valorAntigo)||0)?(preco-c.valorAntigo)/c.valorAntigo:0};
+}
+function viewPcento(){
+  const lista=DB.pcento.filter(c=>c.sabor.toLowerCase().includes(fCen.toLowerCase()));
+  const cols=[{t:'Sabor'},{t:'Custo do cento',num:1},{t:'Acréscimo',num:1},{t:'Custo mínimo',num:1},{t:'Valor antigo',num:1},{t:'Preço do cento',num:1},{t:'Meio cento',num:1},{t:'Máx. desconto',num:1},{t:'Dif. cardápio',num:1},{t:''}];
+  const rows=lista.map(c=>{const j=DB.pcento.indexOf(c),r=linhaCento(c),
+    p=produtoPorSabor(c.sabor), auto=p?precificar(p).festas*100:0;return [
+    {v:c.sabor,h:`<strong>${esc(c.sabor)}</strong>${r.custo?'':' <span class="pill a">custo em branco</span>'}`},
+    {v:r.custo,h:auto>0?BRL(r.custo)+' <span class="muted" style="font-size:11px">auto</span>'
+       :`<input type="number" step="any" value="${Number(c.custoCento)||0}" style="width:100px;text-align:right" onchange="DB.pcento[${j}].custoCento=+this.value;save();viewPcento()">`,num:1},
+    {v:Number(c.acrescimo)||0,h:`<input type="number" step="any" value="${Number(c.acrescimo)||0}" style="width:80px;text-align:right" onchange="DB.pcento[${j}].acrescimo=+this.value;save();viewPcento()">`,num:1},
+    {v:r.minimo,h:r.minimo?BRL(r.minimo):'—',num:1},
+    {v:Number(c.valorAntigo)||0,h:`<input type="number" step="any" value="${Number(c.valorAntigo)||0}" style="width:90px;text-align:right" onchange="DB.pcento[${j}].valorAntigo=+this.value;save();viewPcento()">`,num:1},
+    {v:r.preco,h:`<input type="number" step="any" value="${r.preco}" style="width:100px;text-align:right" onchange="DB.pcento[${j}].precoCento=+this.value;save();viewPcento()">`,num:1},
+    {v:r.meio,h:`<strong>${BRL(r.meio)}</strong>`,num:1},
+    {v:r.desconto??-1,h:r.desconto===null?'<span class="muted">—</span>':`<span class="pill ${r.desconto>=.15?'v':'a'}">${PCT(r.desconto)}</span>`,num:1},
+    {v:r.difR,h:`${BRL(r.difR)}${(Number(c.valorAntigo)||0)?' · '+PCT(r.difP):''}`,num:1},
+    {v:'',h:`<button class="btn ghost" onclick="DB.pcento.splice(${j},1);save();viewPcento()">✕</button>`,num:1}];});
+  const comPreco=DB.pcento.filter(c=>Number(c.precoCento)>0);
+  const ticket=comPreco.length?comPreco.reduce((s,c)=>s+Number(c.precoCento),0)/comPreco.length:0;
+  $('#view').innerHTML=`
+  <div class="card">
+    <h2>P. Cento — precificação comercial</h2>
+    <p class="sub">Custo do cento = custo de festas × 100, puxado da Precificação. Onde a planilha ainda não tem custo, dá para digitar o valor na mão. O custo mínimo é o custo do cento mais o acréscimo (padrão R$ ${(DB.config.acrescimoCento||8)}), e o máximo de desconto mostra até onde dá para negociar sem passar do mínimo.</p>
+    <div class="grid g3" style="margin-bottom:14px">
+      <div class="kpi"><div class="lab">Sabores</div><div class="val">${DB.pcento.length}</div></div>
+      <div class="kpi"><div class="lab">Com preço definido</div><div class="val">${comPreco.length}</div></div>
+      <div class="kpi"><div class="lab">Preço médio do cento</div><div class="val">${BRL(ticket)}</div></div>
+    </div>
+    <div class="toolbar">
+      <input class="grow" placeholder="Buscar sabor…" value="${esc(fCen)}" oninput="fCen=this.value;viewPcento();this.focus();this.setSelectionRange(this.value.length,this.value.length)">
+      <button class="btn" onclick="addCento()">+ Sabor</button>
+    </div>
+    ${tabela('pcento',cols,rows,'Nenhum sabor encontrado.')}
+  </div>`;
+}
+function addCento(){
+  const nomes=DB.produtos.filter(p=>p.linha==='Brigadeiros').map(p=>`<option>${esc(p.nome)}</option>`).join('');
+  openDlg(`<h3>Novo sabor no P. Cento</h3>
+   <div class="field"><label class="f">Sabor (mesmo nome do produto)</label><input id="c_nome" list="lstcen"><datalist id="lstcen">${nomes}</datalist></div>
+   <div class="grid g2">
+     <div class="field"><label class="f">Acréscimo (R$)</label><input id="c_ac" type="number" step="any" value="${DB.config.acrescimoCento||8}"></div>
+     <div class="field"><label class="f">Preço do cento (R$)</label><input id="c_pr" type="number" step="any" value="0"></div>
+   </div>
+   <div class="toolbar" style="justify-content:flex-end"><button class="btn ghost" onclick="closeDlg()">Cancelar</button>
+   <button class="btn" onclick="salvarCento()">Salvar</button></div>`);
+}
+function salvarCento(){
+  const s=$('#c_nome').value.trim(); if(!s) return toast('Informe o sabor');
+  DB.pcento.push({sabor:s,acrescimo:+$('#c_ac').value||0,valorAntigo:0,precoCento:+$('#c_pr').value||0});
+  save();closeDlg();viewPcento();toast('Sabor adicionado');
+}
+
 /* ---------- ORÇAMENTO ---------- */
 let orc=JSON.parse(localStorage.getItem('brigadeiraria.orc')||'null')||{cliente:'',data:new Date().toISOString().slice(0,10),modalidade:'avulso',itens:[]};
 const saveOrc=()=>localStorage.setItem('brigadeiraria.orc',JSON.stringify(orc));
@@ -616,6 +729,13 @@ function viewOrcamento(){
   });
   const tot=linhas.reduce((s,l)=>s+l.tot,0), custo=linhas.reduce((s,l)=>s+l.custo,0);
   const lucro=tot-custo;
+  const cols=[{t:'Produto'},{t:'Qtd',num:1},{t:'Preço un.',num:1},{t:'Total',num:1},{t:''}];
+  const rows=linhas.map(l=>[
+    {v:l.it.produto},
+    {v:Number(l.it.qtd)||0,h:`<input type="number" value="${l.it.qtd}" style="width:80px;text-align:right" onchange="orc.itens[${l.j}].qtd=+this.value;saveOrc();viewOrcamento()">`,num:1},
+    {v:l.pu,h:BRL(l.pu),num:1},
+    {v:l.tot,h:`<strong>${BRL(l.tot)}</strong>`,num:1},
+    {v:'',h:`<span class="noprint"><button class="btn ghost" onclick="orc.itens.splice(${l.j},1);saveOrc();viewOrcamento()">✕</button></span>`,num:1}]);
   $('#view').innerHTML=`
   <div class="card">
     <h2>Orçamento</h2><p class="sub">Monte o pedido, veja o lucro e imprima para enviar ao cliente.</p>
@@ -632,12 +752,7 @@ function viewOrcamento(){
       <button class="btn ghost" onclick="window.print()">Imprimir / PDF</button>
       <button class="btn dang" onclick="orc.itens=[];saveOrc();viewOrcamento()">Limpar</button>
     </div>
-    <div class="wrap"><table><thead><tr><th>Produto</th><th class="num">Qtd</th><th class="num">Preço un.</th><th class="num">Total</th><th class="noprint"></th></tr></thead>
-      <tbody>${linhas.map(l=>`<tr><td>${esc(l.it.produto)}</td>
-        <td class="num"><input type="number" value="${l.it.qtd}" style="width:80px;text-align:right" onchange="orc.itens[${l.j}].qtd=+this.value;saveOrc();viewOrcamento()"></td>
-        <td class="num">${BRL(l.pu)}</td><td class="num"><strong>${BRL(l.tot)}</strong></td>
-        <td class="num noprint"><button class="btn ghost" onclick="orc.itens.splice(${l.j},1);saveOrc();viewOrcamento()">✕</button></td></tr>`).join('')||'<tr><td colspan="5" class="muted">Nenhum item ainda.</td></tr>'}
-      </tbody></table></div>
+    ${tabela('orcamento',cols,rows,'Nenhum item ainda.')}
     <div class="grid g3" style="margin-top:14px">
       <div class="kpi"><div class="lab">Total do orçamento</div><div class="val">${BRL(tot)}</div></div>
       <div class="kpi"><div class="lab">Custo estimado</div><div class="val">${BRL(custo)}</div></div>
@@ -649,12 +764,15 @@ function viewOrcamento(){
 function addOrc(){const p=$('#o_prod').value,q=+$('#o_qtd').value||1;if(!p)return;orc.itens.push({produto:p,qtd:q});saveOrc();viewOrcamento();}
 
 /* ---------- ESTOQUE ---------- */
-let fEst='';
+let fEst='',ordEst='az',abertos=new Set();
 const LOCAIS={'A':'Armário A (caixa superior)','B':'Armário B','C':'Armário C','D':'Caixa D','E':'Caixa E','F':'Organizador F (porta-sapato)','P':'Prateleiras'};
 function nomeLocal(l){const b=String(l)[0];return (LOCAIS[b]||'Outros')+' · '+l;}
 function viewEstoque(){
   const lista=DB.estoque.filter(e=>(e.item+' '+e.local).toLowerCase().includes(fEst.toLowerCase()));
   const grupos={};lista.forEach(e=>{(grupos[e.local]=grupos[e.local]||[]).push(e)});
+  Object.values(grupos).forEach(g=>g.sort((a,b)=>{
+    const r=String(a.item||'').localeCompare(String(b.item||''),'pt-BR',{numeric:true,sensitivity:'base'});
+    return ordEst==='az'?r:-r;}));
   const acabando=DB.estoque.filter(e=>e.acabando).length;
   $('#view').innerHTML=`
   <div class="card">
@@ -666,16 +784,27 @@ function viewEstoque(){
     </div>
     <div class="toolbar">
       <input class="grow" placeholder="Buscar item ou nicho (ex.: oreo, C.1.2)…" value="${esc(fEst)}" oninput="fEst=this.value;viewEstoque();this.focus();this.setSelectionRange(this.value.length,this.value.length)">
+      <select onchange="ordEst=this.value;viewEstoque()"><option value="az" ${ordEst==='az'?'selected':''}>Itens A → Z</option><option value="za" ${ordEst==='za'?'selected':''}>Itens Z → A</option></select>
       <button class="btn" onclick="addEstoque()">+ Item</button>
     </div>
-    ${Object.keys(grupos).sort().map(l=>`<details class="locgroup" ${fEst?'open':''}>
+    ${Object.keys(grupos).sort((a,b)=>String(a).localeCompare(String(b),'pt-BR',{numeric:true})).map(l=>`<details class="locgroup" ${(fEst||abertos.has(l))?'open':''} ontoggle="this.open?abertos.add('${esc(l)}'):abertos.delete('${esc(l)}')">
       <summary>${esc(nomeLocal(l))} <span class="muted">(${grupos[l].length})</span></summary>
-      <ul>${grupos[l].map(e=>{const j=DB.estoque.indexOf(e);return `<li>
-        <label style="cursor:pointer"><input type="checkbox" ${e.acabando?'checked':''} onchange="DB.estoque[${j}].acabando=this.checked;save();viewEstoque()">
-        ${esc(e.item)}</label> ${e.acabando?'<span class="pill a">acabando</span>':''}
-        <button class="btn ghost" style="padding:2px 8px;font-size:12px" onclick="DB.estoque.splice(${j},1);save();viewEstoque()">✕</button></li>`}).join('')}</ul>
+      <ul>${grupos[l].map(e=>{const j=DB.estoque.indexOf(e);return `<li id="est${j}">
+        <label style="cursor:pointer"><input type="checkbox" ${e.acabando?'checked':''} onchange="marcarAcabando(${j},this.checked)">
+        ${esc(e.item)}</label> <span class="pill a" style="display:${e.acabando?'inline-block':'none'}">acabando</span>
+        <button class="btn ghost" style="padding:2px 8px;font-size:12px" onclick="removerEstoque(${j})">✕</button></li>`}).join('')}</ul>
     </details>`).join('')||'<p class="muted">Nada encontrado.</p>'}
   </div>`;
+}
+function marcarAcabando(j,v){
+  DB.estoque[j].acabando=v; save();
+  const li=document.getElementById('est'+j), pill=li&&li.querySelector('.pill');
+  if(pill) pill.style.display=v?'inline-block':'none';
+  const kpi=document.querySelectorAll('.kpi .val')[2];
+  if(kpi) kpi.textContent=DB.estoque.filter(e=>e.acabando).length;
+}
+function removerEstoque(j){
+  DB.estoque.splice(j,1); save(); viewEstoque();
 }
 function addEstoque(){
   openDlg(`<h3>Novo item de estoque</h3>
@@ -738,9 +867,49 @@ function exportXLSX(){
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rec),'Receitas');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.produtos.map(p=>{const r=precificar(p);return{Linha:p.linha,Produto:p.nome,'Custo unitário':p.custoUnit,'Custo c/ indiretos':r.total,Markup:p.markup,'Avulso':r.avulso,'Festas':r.festas,'Revenda':r.revenda,'Delivery':r.delivery,'Lucro':r.lucro}})),'Precificação');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.despesas),'Despesas');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.pcento.map(c=>{const r=linhaCento(c);return{Sabor:c.sabor,'Custo do cento':r.custo,'Acréscimo':c.acrescimo,'Custo mínimo':r.minimo,'Valor antigo':c.valorAntigo,'Preço do cento':r.preco,'Meio cento':r.meio,'Máx. desconto':r.desconto}})),'P. Cento');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.estoque.map(e=>({Nicho:e.local,Item:e.item,Acabando:e.acabando?'sim':''}))),'Estoque');
   XLSX.writeFile(wb,'brigadeiraria.xlsx');
 }
+
+/* ---------- instalação (PWA) ---------- */
+let promptInstalar=null;
+const semSW=()=>{
+  const h=location.hostname;
+  return location.protocol==='file:'||window.top!==window.self||
+    h==='localhost'||h==='127.0.0.1'||
+    h.startsWith('id-preview--')||h.startsWith('preview--')||
+    /(^|\.)lovableproject\.com$/.test(h)||/(^|\.)lovableproject-dev\.com$/.test(h)||
+    /(^|\.)beta\.lovable\.dev$/.test(h)||/(^|\.)lovable\.app$/.test(h)||
+    new URLSearchParams(location.search).has('sw-off');
+};
+if('serviceWorker' in navigator){
+  if(semSW()){
+    navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>{
+      if((r.active?.scriptURL||'').includes('sw.js')) r.unregister();
+    })).catch(()=>{});
+  }else{
+    window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  }
+}
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); promptInstalar=e;
+  const b=$('#btnInstalar'); if(b) b.hidden=false;
+});
+window.addEventListener('appinstalled',()=>{const b=$('#btnInstalar');if(b)b.hidden=true;toast('App instalado 🎉');});
+function instalarApp(){
+  if(promptInstalar){ promptInstalar.prompt(); promptInstalar.userChoice.finally(()=>{promptInstalar=null;$('#btnInstalar').hidden=true;}); return; }
+  openDlg(`<h3>Instalar no seu aparelho</h3>
+   <p class="sub">No <strong>iPhone/iPad (Safari)</strong>: toque em Compartilhar → <em>Adicionar à Tela de Início</em>.<br>
+   No <strong>Android (Chrome)</strong>: menu ⋮ → <em>Instalar aplicativo</em>.<br>
+   No <strong>computador (Chrome/Edge)</strong>: ícone de instalar na barra de endereço.</p>
+   <div class="toolbar" style="justify-content:flex-end"><button class="btn" onclick="closeDlg()">Entendi</button></div>`);
+}
+(function mostraInstalar(){
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+  if(ios&&!standalone&&!semSW()){const b=$('#btnInstalar'); if(b) b.hidden=false;}
+})();
 
 window.addEventListener('hashchange',()=>{ if(DB) go(location.hash.slice(1)); });
 iniciarAuth();
